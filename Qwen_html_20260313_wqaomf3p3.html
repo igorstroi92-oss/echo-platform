@@ -1,0 +1,2803 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭХО | Платформа психологической помощи - Практики, Терапия, B2B</title>
+    <meta name="description" content="Профессиональная психологическая помощь онлайн. Индивидуальные и групповые сессии, практики, корпоративные решения.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-light: #e0e7ff;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --border: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Manrope', sans-serif;
+        }
+        
+        * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.25rem; }
+        h3 { font-size: 1.5rem; }
+        
+        /* HEADER */
+        header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: var(--font-heading);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--accent); }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+        
+        /* BUTTONS */
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            font-family: var(--font-body);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #059669; }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-lg { padding: 16px 40px; font-size: 1.1rem; }
+        .btn-block { width: 100%; justify-content: center; }
+        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+        
+        main {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--accent-light) 0%, #f0f9ff 100%);
+            border-radius: 24px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--success-light);
+            color: var(--success);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: var(--font-heading);
+        }
+        .hero-stat-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        /* LEAD MAGNET */
+        .lead-magnet {
+            background: linear-gradient(135deg, var(--success-light) 0%, var(--accent-light) 100%);
+            border: 2px solid var(--success);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .lead-magnet::before {
+            content: '🎁';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+        .lead-magnet h3 {
+            color: var(--success);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        .lead-magnet p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        
+        /* PRACTICES SECTION */
+        .practices-section {
+            margin: 60px 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section-title h2 {
+            margin-bottom: 15px;
+        }
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .practice-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .practice-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        .practice-card:hover::before {
+            transform: scaleX(1);
+        }
+        .practice-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+        .practice-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .practice-title {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .practice-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .practice-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .practice-duration {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* TESTIMONIALS */
+        .testimonials-section {
+            margin: 60px 0;
+            background: var(--bg-secondary);
+            padding: 60px 40px;
+            border-radius: 24px;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .testimonial-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 5rem;
+            color: var(--accent-light);
+            font-family: serif;
+            line-height: 1;
+        }
+        .testimonial-rating {
+            color: #fbbf24;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .testimonial-text {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .testimonial-info {
+            flex: 1;
+        }
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .testimonial-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* GROUP SESSIONS */
+        .group-sessions-section {
+            margin: 60px 0;
+        }
+        .group-session-card {
+            background: linear-gradient(135deg, var(--accent-light) 0%, #f0f9ff 100%);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .group-session-card::before {
+            content: '🔴 LIVE';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: var(--danger);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .group-session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-right: 100px;
+        }
+        .group-session-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .group-session-meta {
+            display: flex;
+            gap: 25px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .group-session-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .group-session-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .group-session-expert {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .group-session-expert-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        .group-session-expert-info {
+            flex: 1;
+        }
+        .group-session-expert-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .group-session-expert-spec {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        /* PRICING */
+        .pricing-section {
+            margin: 60px 0;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .pricing-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+        }
+        .pricing-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .pricing-card.popular {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent-light) 0%, #f0f9ff 100%);
+            transform: scale(1.05);
+        }
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .pricing-card.b2b {
+            border-color: var(--success);
+            background: linear-gradient(135deg, var(--success-light) 0%, #f0fdf4 100%);
+            grid-column: span 2;
+        }
+        .pricing-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        .pricing-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+        .pricing-price span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 25px 0;
+        }
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        .pricing-features li i {
+            color: var(--success);
+        }
+        .b2b-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            text-align: left;
+            margin: 25px 0;
+        }
+        .b2b-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+        .b2b-feature i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+        
+        /* BLOG */
+        .blog-section {
+            margin: 60px 0;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .blog-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .blog-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        .blog-content {
+            padding: 25px;
+        }
+        .blog-category {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .blog-title {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .blog-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* LOYALTY PROGRAM */
+        .loyalty-section {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 24px;
+            padding: 60px 40px;
+            margin: 60px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .loyalty-section::before {
+            content: '🏆';
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 5rem;
+            opacity: 0.2;
+        }
+        .loyalty-section h2 {
+            margin-bottom: 15px;
+            color: white;
+        }
+        .loyalty-section p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.95;
+        }
+        .loyalty-benefits {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .loyalty-benefit {
+            text-align: center;
+        }
+        .loyalty-benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .loyalty-benefit-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .loyalty-benefit-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* EXPERTS */
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .expert-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .expert-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+        .expert-photo {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .expert-photo-placeholder {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+            font-weight: 700;
+        }
+        .expert-name {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        .expert-spec {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        .expert-rating {
+            color: #fbbf24;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        .expert-badge {
+            display: inline-block;
+            background: var(--success-light);
+            color: var(--success);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .expert-works-with {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .expert-work-tag {
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .expert-methods-list {
+            margin: 15px 0;
+            padding-left: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .expert-methods-list li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .expert-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .expert-experience {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .expert-price {
+            text-align: right;
+        }
+        .expert-price-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+        .expert-price-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* CALENDAR */
+        .calendar-section {
+            margin: 60px 0;
+        }
+        .calendar-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .calendar-nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 10px;
+            font-size: 0.85rem;
+        }
+        .calendar-day {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            min-height: 100px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .calendar-day:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+        .calendar-day.today {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+        .calendar-day-number {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        .calendar-event {
+            background: var(--accent);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .calendar-event.client {
+            background: var(--success);
+        }
+        
+        /* MODALS */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal.show { display: flex !important; }
+        .modal-content {
+            background: var(--bg-primary);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 90%;
+            border: 1px solid var(--border);
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-close:hover { color: var(--danger); }
+        
+        /* PRACTICE MODAL */
+        .practice-steps {
+            margin: 20px 0;
+        }
+        .practice-step {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .practice-step.active {
+            border-left-color: var(--success);
+            background: var(--success-light);
+        }
+        .practice-step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        .practice-step.active .practice-step-number {
+            background: var(--success);
+        }
+        .practice-timer {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+        .practice-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        /* AUTH */
+        .auth-container { max-width: 450px; margin: 60px auto; }
+        .auth-tabs { display: flex; gap: 10px; margin-bottom: 25px; }
+        .auth-tab {
+            flex: 1;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .auth-tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: var(--font-body);
+            transition: 0.3s;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .form-hint {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: -12px;
+            margin-bottom: 18px;
+        }
+        
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+        .toast {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            min-width: 300px;
+            box-shadow: var(--shadow-lg);
+        }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.warning { border-left: 4px solid var(--warning); }
+        .toast.info { border-left: 4px solid var(--accent); }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .payment-info {
+            background: var(--success-light);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .payment-split {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--success);
+        }
+        .split-item { text-align: center; }
+        .split-percentage {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+        .split-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .text-center { text-align: center; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+        .mt-20 { margin-top: 20px; }
+        .mt-30 { margin-top: 30px; }
+        .flex { display: flex; }
+        .flex-between { justify-content: space-between; }
+        .flex-center { align-items: center; }
+        .gap-10 { gap: 10px; }
+        .gap-15 { gap: 15px; }
+        .hidden { display: none !important; }
+        .w-full { width: 100%; }
+        
+        .emergency-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--danger);
+            color: white;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
+            transition: 0.3s;
+            z-index: 999;
+            border: none;
+        }
+        .emergency-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(239, 68, 68, 0.6);
+        }
+        
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; gap: 20px; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; }
+            .hero h1 { font-size: 2rem; }
+            .pricing-card.b2b { grid-column: span 1; }
+            .b2b-features { grid-template-columns: 1fr; }
+            .group-session-header { padding-right: 0; flex-direction: column; gap: 15px; }
+            .group-session-card::before { display: none; }
+            .calendar-grid { grid-template-columns: repeat(7, 1fr); }
+            .calendar-day { min-height: 80px; padding: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo" onclick="navigate('home')">
+                <div class="logo-icon"><i class="fas fa-heart"></i></div>
+                ЭХО
+            </div>
+            <nav class="nav-menu" id="nav-menu">
+                <a class="nav-link active" onclick="navigate('home')">Главная</a>
+                <a class="nav-link" onclick="navigate('practices')">Практики</a>
+                <a class="nav-link" onclick="navigate('group')">Групповые</a>
+                <a class="nav-link" onclick="navigate('experts')">Специалисты</a>
+                <a class="nav-link" onclick="navigate('pricing')">Тарифы</a>
+                <a class="nav-link" onclick="navigate('blog')">Блог</a>
+            </nav>
+            <div class="header-actions">
+                <div id="user-info" class="hidden">
+                    <span id="user-name" style="margin-right: 10px; font-weight: 500;"></span>
+                </div>
+                <button class="btn btn-outline btn-sm" id="auth-btn" onclick="openAuthModal()">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+                <button class="btn btn-success btn-sm" id="register-btn" onclick="openRegisterModal()">
+                    <i class="fas fa-user-plus"></i> Регистрация
+                </button>
+                <button class="btn btn-danger btn-sm hidden" id="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Выход
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HOME PAGE -->
+        <div id="home" class="section active">
+            <div class="hero">
+                <div class="hero-badge">
+                    <i class="fas fa-shield-check"></i>
+                    Анонимно • Профессионально • Круглосуточно
+                </div>
+                <h1>Здесь вам помогут. Вы не одни.</h1>
+                <p class="hero-subtitle">
+                    Профессиональная психологическая помощь онлайн. 
+                    Индивидуальные и групповые сессии, практики самопомощи, корпоративные решения.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-lg btn-success" onclick="navigate('experts')">
+                        <i class="fas fa-search"></i> Найти специалиста
+                    </button>
+                    <button class="btn btn-lg" onclick="navigate('practices')">
+                        <i class="fas fa-brain"></i> Бесплатные практики
+                    </button>
+                    <button class="btn btn-lg btn-outline" onclick="openRegisterModal()">
+                        <i class="fas fa-user-plus"></i> Регистрация
+                    </button>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">150+</div>
+                        <div class="hero-stat-label">Проверенных экспертов</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">5000+</div>
+                        <div class="hero-stat-label">Проведённых сессий</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">4.9</div>
+                        <div class="hero-stat-label">Средний рейтинг</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">98%</div>
+                        <div class="hero-stat-label">Довольных клиентов</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEAD MAGNET -->
+            <div class="lead-magnet">
+                <h3>🎁 Бесплатная консультация</h3>
+                <p>Запишитесь на бесплатную 15-минутную консультацию с психологом. Поможем определить ваш запрос и подобрать специалиста.</p>
+                <button class="btn btn-lg btn-success" onclick="openFreeConsultationModal()">
+                    <i class="fas fa-gift"></i> Получить консультацию
+                </button>
+            </div>
+            
+            <!-- PRACTICES SECTION -->
+            <div class="practices-section">
+                <div class="section-title">
+                    <h2><i class="fas fa-brain"></i> Практики самопомощи</h2>
+                    <p>Бесплатные техники и упражнения для работы с тревогой, стрессом и эмоциональным состоянием</p>
+                </div>
+                <div class="practices-grid">
+                    <div class="practice-card" onclick="openPractice('meditation')">
+                        <div class="practice-icon"><i class="fas fa-spa"></i></div>
+                        <h3 class="practice-title">Медитация осознанности</h3>
+                        <p class="practice-desc">Научитесь управлять вниманием и снижать уровень тревоги через практику осознанности.</p>
+                        <div class="practice-meta">
+                            <span class="practice-duration"><i class="fas fa-clock"></i> 15 мин</span>
+                            <span><i class="fas fa-signal"></i> Начинающий</span>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-card" onclick="openPractice('breathing')">
+                        <div class="practice-icon" style="background: var(--success-light); color: var(--success);"><i class="fas fa-wind"></i></div>
+                        <h3 class="practice-title">Дыхательные техники</h3>
+                        <p class="practice-desc">Эффективные упражнения для быстрого снятия стресса и панических атак.</p>
+                        <div class="practice-meta">
+                            <span class="practice-duration"><i class="fas fa-clock"></i> 10 мин</span>
+                            <span><i class="fas fa-signal"></i> Любой уровень</span>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-card" onclick="openPractice('journaling')">
+                        <div class="practice-icon" style="background: var(--warning-light); color: var(--warning);"><i class="fas fa-pen-fancy"></i></div>
+                        <h3 class="practice-title">Дневник эмоций</h3>
+                        <p class="practice-desc">Практика ведения дневника для понимания своих эмоций и триггеров.</p>
+                        <div class="practice-meta">
+                            <span class="practice-duration"><i class="fas fa-clock"></i> 20 мин</span>
+                            <span><i class="fas fa-signal"></i> Средний</span>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-card" onclick="openPractice('grounding')">
+                        <div class="practice-icon" style="background: var(--danger-light); color: var(--danger);"><i class="fas fa-anchor"></i></div>
+                        <h3 class="practice-title">Техники заземления</h3>
+                        <p class="practice-desc">Методы возвращения в «здесь и сейчас» при тревоге и панических атаках.</p>
+                        <div class="practice-meta">
+                            <span class="practice-duration"><i class="fas fa-clock"></i> 5-10 мин</span>
+                            <span><i class="fas fa-signal"></i> Экстренная</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TESTIMONIALS -->
+            <div class="testimonials-section">
+                <div class="section-title">
+                    <h2><i class="fas fa-heart"></i> Отзывы наших клиентов</h2>
+                    <p>Истории людей, которые уже прошли путь к лучшему самочувствию</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "После 3 месяцев работы с психологом на ЭХО моя тревога уменьшилась на 80%. 
+                            Наконец-то могу спокойно спать и наслаждаться жизнью. Спасибо огромное!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">АК</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Анна К.</div>
+                                <div class="testimonial-date">2 недели назад</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Групповые сессии — это нечто! Поддержка людей, которые понимают тебя, 
+                            бесценна. Плюс цена намного доступнее индивидуальных встреч."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">МП</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Михаил П.</div>
+                                <div class="testimonial-date">1 месяц назад</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Корпоративный тариф спас нашу команду от выгорания. Сотрудники стали 
+                            продуктивнее и счастливее. Рекомендую всем HR-директорам!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">ЕС</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Елена С.</div>
+                                <div class="testimonial-date">3 недели назад</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GROUP SESSIONS PREVIEW -->
+            <div class="group-sessions-section">
+                <div class="section-title">
+                    <h2><i class="fas fa-users"></i> Ближайшие групповые сессии</h2>
+                    <p>Присоединяйтесь к онлайн-встречам с психологами и единомышленниками</p>
+                </div>
+                
+                <div class="group-session-card">
+                    <div class="group-session-header">
+                        <div>
+                            <h3 class="group-session-title">Группа поддержки при тревожных расстройствах</h3>
+                            <div class="group-session-meta">
+                                <span><i class="fas fa-calendar"></i> 15 марта, 19:00</span>
+                                <span><i class="fas fa-clock"></i> 90 минут</span>
+                                <span><i class="fas fa-users"></i> 8/12 участников</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="group-session-desc">
+                        Безопасное пространство для тех, кто борется с тревогой. Делимся опытом, 
+                        поддерживаем друг друга, учимся техникам самопомощи под руководством психолога.
+                    </p>
+                    <div class="group-session-expert">
+                        <div class="group-session-expert-avatar">АС</div>
+                        <div class="group-session-expert-info">
+                            <div class="group-session-expert-name">Анна Смирнова</div>
+                            <div class="group-session-expert-spec">Клинический психолог, КПТ-терапевт</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-lg btn-success" onclick="joinGroupSession('1')">
+                        <i class="fas fa-ticket-alt"></i> Записаться (1500₽)
+                    </button>
+                </div>
+                
+                <div class="group-session-card">
+                    <div class="group-session-header">
+                        <div>
+                            <h3 class="group-session-title">Вебинар: Как справляться со стрессом на работе</h3>
+                            <div class="group-session-meta">
+                                <span><i class="fas fa-calendar"></i> 18 марта, 18:00</span>
+                                <span><i class="fas fa-clock"></i> 60 минут</span>
+                                <span><i class="fas fa-users"></i> 45/100 участников</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="group-session-desc">
+                        Практический вебинар с техниками управления стрессом, профилактикой выгорания 
+                        и методами восстановления после рабочего дня.
+                    </p>
+                    <div class="group-session-expert">
+                        <div class="group-session-expert-avatar">ИП</div>
+                        <div class="group-session-expert-info">
+                            <div class="group-session-expert-name">Игорь Петров</div>
+                            <div class="group-session-expert-spec">Психотерапевт, специалист по стрессу</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-lg btn-success" onclick="joinGroupSession('2')">
+                        <i class="fas fa-ticket-alt"></i> Записаться (990₽)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRACTICES PAGE -->
+        <div id="practices" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-brain"></i> Практики самопомощи</h2>
+                <p>Бесплатные техники для работы с ментальным здоровьем</p>
+            </div>
+            <div class="practices-grid">
+                <div class="practice-card">
+                    <div class="practice-icon"><i class="fas fa-spa"></i></div>
+                    <h3 class="practice-title">Медитация осознанности</h3>
+                    <p class="practice-desc">Научитесь управлять вниманием и снижать уровень тревоги через практику осознанности.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('meditation')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon" style="background: var(--success-light); color: var(--success);"><i class="fas fa-wind"></i></div>
+                    <h3 class="practice-title">Дыхательные техники</h3>
+                    <p class="practice-desc">Эффективные упражнения для быстрого снятия стресса и панических атак.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('breathing')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon" style="background: var(--warning-light); color: var(--warning);"><i class="fas fa-pen-fancy"></i></div>
+                    <h3 class="practice-title">Дневник эмоций</h3>
+                    <p class="practice-desc">Практика ведения дневника для понимания своих эмоций и триггеров.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('journaling')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon" style="background: var(--danger-light); color: var(--danger);"><i class="fas fa-anchor"></i></div>
+                    <h3 class="practice-title">Техники заземления</h3>
+                    <p class="practice-desc">Методы возвращения в «здесь и сейчас» при тревоге и панических атаках.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('grounding')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon"><i class="fas fa-moon"></i></div>
+                    <h3 class="practice-title">Ритуал перед сном</h3>
+                    <p class="practice-desc">Вечерние практики для качественного сна и восстановления.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('sleep')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon" style="background: var(--success-light); color: var(--success);"><i class="fas fa-heart"></i></div>
+                    <h3 class="practice-title">Самоподдержка</h3>
+                    <p class="practice-desc">Техники развития доброго отношения к себе и самоподдержки.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('selfcare')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GROUP SESSIONS PAGE -->
+        <div id="group" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-users"></i> Групповые сессии и вебинары</h2>
+                <p>Присоединяйтесь к онлайн-встречам с психологами и единомышленниками</p>
+            </div>
+            
+            <div class="group-session-card">
+                <div class="group-session-header">
+                    <div>
+                        <h3 class="group-session-title">Группа поддержки при тревожных расстройствах</h3>
+                        <div class="group-session-meta">
+                            <span><i class="fas fa-calendar"></i> 15 марта, 19:00</span>
+                            <span><i class="fas fa-clock"></i> 90 минут</span>
+                            <span><i class="fas fa-users"></i> 8/12 участников</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="group-session-desc">
+                    Безопасное пространство для тех, кто борется с тревогой. Делимся опытом, 
+                    поддерживаем друг друга, учимся техникам самопомощи под руководством психолога.
+                </p>
+                <div class="group-session-expert">
+                    <div class="group-session-expert-avatar">АС</div>
+                    <div class="group-session-expert-info">
+                        <div class="group-session-expert-name">Анна Смирнова</div>
+                        <div class="group-session-expert-spec">Клинический психолог, КПТ-терапевт</div>
+                    </div>
+                </div>
+                <div style="background: var(--bg-secondary); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                    <strong>Что вы получите:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; color: var(--text-secondary);">
+                        <li>Поддержку людей, которые понимают вашу ситуацию</li>
+                        <li>Практические техники работы с тревогой</li>
+                        <li>Безопасное пространство для выражения чувств</li>
+                        <li>Обратную связь от профессионала</li>
+                    </ul>
+                </div>
+                <button class="btn btn-lg btn-success" onclick="joinGroupSession('1')">
+                    <i class="fas fa-ticket-alt"></i> Записаться (1500₽)
+                </button>
+            </div>
+            
+            <div class="group-session-card">
+                <div class="group-session-header">
+                    <div>
+                        <h3 class="group-session-title">Вебинар: Как справляться со стрессом на работе</h3>
+                        <div class="group-session-meta">
+                            <span><i class="fas fa-calendar"></i> 18 марта, 18:00</span>
+                            <span><i class="fas fa-clock"></i> 60 минут</span>
+                            <span><i class="fas fa-users"></i> 45/100 участников</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="group-session-desc">
+                    Практический вебинар с техниками управления стрессом, профилактикой выгорания 
+                    и методами восстановления после рабочего дня.
+                </p>
+                <div class="group-session-expert">
+                    <div class="group-session-expert-avatar">ИП</div>
+                    <div class="group-session-expert-info">
+                        <div class="group-session-expert-name">Игорь Петров</div>
+                        <div class="group-session-expert-spec">Психотерапевт, специалист по стрессу</div>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-success" onclick="joinGroupSession('2')">
+                    <i class="fas fa-ticket-alt"></i> Записаться (990₽)
+                </button>
+            </div>
+        </div>
+
+        <!-- EXPERTS PAGE -->
+        <div id="experts" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-user-md"></i> Наши специалисты</h2>
+                <p>Проверенные психологи с опытом работы и подтверждённой квалификацией</p>
+            </div>
+            <div class="experts-grid" id="experts-list"></div>
+        </div>
+
+        <!-- EXPERT CALENDAR PAGE -->
+        <div id="expert-calendar" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-calendar-alt"></i> Календарь записей</h2>
+                <p>Ваши запланированные сессии с клиентами</p>
+            </div>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button class="btn btn-outline btn-sm" onclick="previousMonth()"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="calendar-month">Март 2024</h3>
+                        <button class="btn btn-outline btn-sm" onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+        </div>
+
+        <!-- PRICING PAGE -->
+        <div id="pricing" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-tags"></i> Тарифы</h2>
+                <p>Выберите подходящий вариант поддержки</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-icon"><i class="fas fa-free-code-camp"></i></div>
+                    <h3 class="pricing-name">Бесплатный</h3>
+                    <div class="pricing-price">0₽<span>/навсегда</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Подбор психолога</li>
+                        <li><i class="fas fa-check"></i> Практики самопомощи</li>
+                        <li><i class="fas fa-check"></i> Блог и статьи</li>
+                        <li><i class="fas fa-check"></i> Сообщество поддержки</li>
+                        <li><i class="fas fa-check"></i> Базовые медитации</li>
+                    </ul>
+                    <button class="btn btn-block btn-outline btn-lg" onclick="selectPricing('free')">
+                        Начать бесплатно
+                    </button>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div class="pricing-badge">ПОПУЛЯРНЫЙ</div>
+                    <div class="pricing-icon"><i class="fas fa-star"></i></div>
+                    <h3 class="pricing-name">Премиум</h3>
+                    <div class="pricing-price">990₽<span>/месяц</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Всё из бесплатного</li>
+                        <li><i class="fas fa-check"></i> 1 индивидуальная сессия</li>
+                        <li><i class="fas fa-check"></i> Доступ к видео-курсам</li>
+                        <li><i class="fas fa-check"></i> Приоритетная поддержка</li>
+                        <li><i class="fas fa-check"></i> Скидка 20% на доп. сессии</li>
+                        <li><i class="fas fa-check"></i> Участие в 1 групповой сессии</li>
+                    </ul>
+                    <button class="btn btn-block btn-lg btn-success" onclick="selectPricing('premium')">
+                        Выбрать Премиум
+                    </button>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-icon"><i class="fas fa-crown"></i></div>
+                    <h3 class="pricing-name">Безлимит</h3>
+                    <div class="pricing-price">2490₽<span>/месяц</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Всё из Премиум</li>
+                        <li><i class="fas fa-check"></i> 4 сессии в месяц</li>
+                        <li><i class="fas fa-check"></i> Чат с психологом 24/7</li>
+                        <li><i class="fas fa-check"></i> Персональный куратор</li>
+                        <li><i class="fas fa-check"></i> Все курсы и практики</li>
+                        <li><i class="fas fa-check"></i> Семейный доступ (до 3 чел)</li>
+                    </ul>
+                    <button class="btn btn-block btn-lg" onclick="selectPricing('unlimited')">
+                        Выбрать Безлимит
+                    </button>
+                </div>
+                
+                <div class="pricing-card b2b">
+                    <div class="pricing-badge" style="background: var(--success);">ДЛЯ БИЗНЕСА</div>
+                    <div class="pricing-icon" style="color: var(--success);"><i class="fas fa-building"></i></div>
+                    <h3 class="pricing-name">Корпоративный wellbeing</h3>
+                    <div class="pricing-price">от 500₽<span>/сотрудник/месяц</span></div>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                        Комплексная программа заботы о ментальном здоровье вашей команды
+                    </p>
+                    <div class="b2b-features">
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Неограниченные консультации</span>
+                        </div>
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Групповые вебинары</span>
+                        </div>
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Профилактика выгорания</span>
+                        </div>
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Аналитика для HR</span>
+                        </div>
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Персональный менеджер</span>
+                        </div>
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Корпоративный чат</span>
+                        </div>
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Тренинги для команд</span>
+                        </div>
+                        <div class="b2b-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Отчётность и метрики</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-block btn-lg" style="background: var(--success);" onclick="openB2BModal()">
+                        <i class="fas fa-envelope"></i> Запросить коммерческое предложение
+                    </button>
+                    <p style="margin-top: 15px; font-size: 0.85rem; color: var(--text-secondary);">
+                        <i class="fas fa-info-circle"></i> Минимум от 10 сотрудников. Индивидуальные условия для крупных компаний.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BLOG PAGE -->
+        <div id="blog" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-newspaper"></i> Блог о ментальном здоровье</h2>
+                <p>Полезные статьи, советы экспертов и истории выздоровления</p>
+            </div>
+            <div id="blog-write-section" class="hidden" style="margin-bottom: 40px;">
+                <div class="card">
+                    <h3><i class="fas fa-pen"></i> Написать статью</h3>
+                    <input type="text" id="blog-title" placeholder="Заголовок статьи">
+                    <select id="blog-category">
+                        <option value="Тревога">Тревога</option>
+                        <option value="Депрессия">Депрессия</option>
+                        <option value="Отношения">Отношения</option>
+                        <option value="Самооценка">Самооценка</option>
+                        <option value="Стресс">Стресс</option>
+                        <option value="Другое">Другое</option>
+                    </select>
+                    <textarea id="blog-content" placeholder="Содержание статьи..." rows="6"></textarea>
+                    <button class="btn btn-success" onclick="publishBlogPost()">
+                        <i class="fas fa-paper-plane"></i> Опубликовать
+                    </button>
+                </div>
+            </div>
+            <div class="blog-grid" id="blog-list"></div>
+        </div>
+
+        <!-- LOYALTY PROGRAM -->
+        <div class="loyalty-section">
+            <h2><i class="fas fa-gift"></i> Программа лояльности</h2>
+            <p>Чем больше вы заботитесь о себе, тем больше бонусов получаете!</p>
+            <div class="loyalty-benefits">
+                <div class="loyalty-benefit">
+                    <div class="loyalty-benefit-icon">🎯</div>
+                    <div class="loyalty-benefit-title">5-я сессия бесплатно</div>
+                    <div class="loyalty-benefit-desc">После 4 оплаченных сессий</div>
+                </div>
+                <div class="loyalty-benefit">
+                    <div class="loyalty-benefit-icon">👥</div>
+                    <div class="loyalty-benefit-title">Приведи друга</div>
+                    <div class="loyalty-benefit-desc">Скидка 20% вам обоим</div>
+                </div>
+                <div class="loyalty-benefit">
+                    <div class="loyalty-benefit-icon">📅</div>
+                    <div class="loyalty-benefit-title">Годовая подписка</div>
+                    <div class="loyalty-benefit-desc">Экономия до 40%</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button class="emergency-btn" onclick="openEmergencyModal()">
+        <i class="fas fa-phone"></i>
+    </button>
+
+    <footer>
+        <p>© 2024 ЭХО | Платформа психологической помощи</p>
+        <p style="margin-top: 10px;">📞 8-800-2000-122 | 📧 support@echo-mental.ru</p>
+        <p style="margin-top: 10px; font-size: 0.85rem;">
+            <a href="#" style="color: var(--accent);">Оферта</a> | 
+            <a href="#" style="color: var(--accent);">Конфиденциальность</a> | 
+            <a href="#" style="color: var(--accent);">Политика cookies</a>
+        </p>
+    </footer>
+
+    <!-- ALL MODALS -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-circle"></i> Вход в систему</h3>
+                <button class="modal-close" onclick="closeModal('auth-modal')">&times;</button>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchModalAuthTab('client')">
+                    <i class="fas fa-user"></i> Клиент
+                </div>
+                <div class="auth-tab" onclick="switchModalAuthTab('expert')">
+                    <i class="fas fa-user-md"></i> Специалист
+                </div>
+            </div>
+            
+            <div id="modal-client-auth-form">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="modal-client-email" placeholder="test@test.ru">
+                <label><i class="fas fa-lock"></i> Пароль</label>
+                <input type="password" id="modal-client-password" placeholder="test123">
+                <button class="btn btn-block btn-lg" onclick="modalClientAuth()">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+                <p class="text-center mt-20" style="color: var(--text-secondary);">
+                    Нет аккаунта? <a href="#" onclick="closeModal('auth-modal'); openRegisterModal();" style="color: var(--accent);">Зарегистрироваться</a>
+                </p>
+            </div>
+            
+            <div id="modal-expert-auth-form" class="hidden">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="modal-expert-email" placeholder="igor.ylitka1992@mail.ru">
+                <label><i class="fas fa-lock"></i> Пароль</label>
+                <input type="password" id="modal-expert-password" placeholder="alla123">
+                <button class="btn btn-block btn-lg" style="background: var(--accent);" onclick="modalExpertAuth()">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+                <div class="payment-info mt-20">
+                    <strong>📝 Вход для специалиста:</strong><br>
+                    Email: <code>igor.ylitka1992@mail.ru</code><br>
+                    Пароль: <code>alla123</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Регистрация</h3>
+                <button class="modal-close" onclick="closeModal('register-modal')">&times;</button>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchRegisterTab('client')">
+                    <i class="fas fa-user"></i> Клиент
+                </div>
+                <div class="auth-tab" onclick="switchRegisterTab('expert')">
+                    <i class="fas fa-user-md"></i> Специалист
+                </div>
+            </div>
+            
+            <div id="register-client-form">
+                <label><i class="fas fa-user"></i> Имя</label>
+                <input type="text" id="reg-name" placeholder="Ваше имя">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="reg-email" placeholder="email@example.com">
+                <label><i class="fas fa-lock"></i> Пароль</label>
+                <input type="password" id="reg-password" placeholder="Минимум 6 символов">
+                <p class="form-hint">Пароль должен содержать минимум 6 символов</p>
+                <button class="btn btn-block btn-lg btn-success" onclick="registerClient()">
+                    <i class="fas fa-check"></i> Зарегистрироваться
+                </button>
+                <p class="text-center mt-20" style="color: var(--text-secondary);">
+                    Уже есть аккаунт? <a href="#" onclick="closeModal('register-modal'); openAuthModal();" style="color: var(--accent);">Войти</a>
+                </p>
+            </div>
+            
+            <div id="register-expert-form" class="hidden">
+                <label><i class="fas fa-user"></i> Имя</label>
+                <input type="text" id="expert-reg-firstname" placeholder="Имя">
+                <label><i class="fas fa-user"></i> Фамилия</label>
+                <input type="text" id="expert-reg-lastname" placeholder="Фамилия">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="expert-reg-email" placeholder="email@example.com">
+                <label><i class="fas fa-briefcase"></i> Специальность</label>
+                <input type="text" id="expert-reg-specialty" placeholder="Например: Клинический психолог">
+                <label><i class="fas fa-graduation-cap"></i> Метод терапии</label>
+                <select id="expert-reg-method">
+                    <option value="КПТ">КПТ</option>
+                    <option value="Гештальт">Гештальт</option>
+                    <option value="Психоанализ">Психоанализ</option>
+                    <option value="EMDR">EMDR</option>
+                </select>
+                <label><i class="fas fa-clock"></i> Опыт работы (лет)</label>
+                <input type="number" id="expert-reg-experience" placeholder="5">
+                <label><i class="fas fa-ruble-sign"></i> Стоимость сессии (₽)</label>
+                <input type="number" id="expert-reg-price" placeholder="2500">
+                <label><i class="fas fa-comment"></i> О себе</label>
+                <textarea id="expert-reg-about" placeholder="Расскажите о вашем подходе..." rows="3"></textarea>
+                <button class="btn btn-block btn-lg" style="background: var(--accent);" onclick="submitExpertApplication()">
+                    <i class="fas fa-paper-plane"></i> Отправить заявку
+                </button>
+                <p class="text-center mt-20" style="color: var(--text-secondary);">
+                    Заявка будет проверена в течение 1-3 дней
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-plus"></i> Запись на сессию</h3>
+                <button class="modal-close" onclick="closeModal('booking-modal')">&times;</button>
+            </div>
+            <p id="booking-expert-name" style="font-size: 1.2rem; margin-bottom: 20px; font-weight: 600;"></p>
+            <label>Дата</label>
+            <input type="date" id="booking-date">
+            <label>Время</label>
+            <input type="time" id="booking-time">
+            <label>Формат</label>
+            <select id="booking-format">
+                <option value="video">📹 Видеосессия</option>
+                <option value="audio">📞 Аудиосессия</option>
+                <option value="chat">💬 Чат-сессия</option>
+            </select>
+            <div class="payment-info">
+                <div class="flex" style="justify-content: space-between; margin-bottom: 12px;">
+                    <span>Стоимость:</span>
+                    <strong id="booking-price">0₽</strong>
+                </div>
+                <div class="payment-split">
+                    <div class="split-item">
+                        <div class="split-percentage">65%</div>
+                        <div class="split-label">Специалисту</div>
+                    </div>
+                    <div class="split-item">
+                        <div class="split-percentage">35%</div>
+                        <div class="split-label">Платформе</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-block btn-lg btn-success" onclick="confirmBooking()">
+                <i class="fas fa-check"></i> Записаться
+            </button>
+        </div>
+    </div>
+
+    <!-- PRACTICE MODAL - NEW -->
+    <div id="practice-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 id="practice-modal-title"><i class="fas fa-spa"></i> Медитация осознанности</h3>
+                <button class="modal-close" onclick="closeModal('practice-modal')">&times;</button>
+            </div>
+            <p id="practice-modal-desc" style="color: var(--text-secondary); margin-bottom: 20px;"></p>
+            <div class="practice-timer" id="practice-timer">15:00</div>
+            <div class="practice-steps" id="practice-steps"></div>
+            <div class="practice-controls">
+                <button class="btn btn-outline" onclick="previousStep()"><i class="fas fa-chevron-left"></i> Назад</button>
+                <button class="btn btn-success" id="practice-start-btn" onclick="togglePractice()">
+                    <i class="fas fa-play"></i> Начать
+                </button>
+                <button class="btn btn-outline" onclick="nextStep()">Вперёд <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="free-consultation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-gift"></i> Бесплатная консультация</h3>
+                <button class="modal-close" onclick="closeModal('free-consultation-modal')">&times;</button>
+            </div>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                Оставьте заявку и мы свяжемся с вами в течение 24 часов для записи на бесплатную 15-минутную консультацию.
+            </p>
+            <label><i class="fas fa-user"></i> Ваше имя</label>
+            <input type="text" id="consult-name" placeholder="Как к вам обращаться">
+            <label><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="consult-email" placeholder="email@example.com">
+            <label><i class="fas fa-phone"></i> Телефон</label>
+            <input type="tel" id="consult-phone" placeholder="+7 (___) ___-__-__">
+            <label><i class="fas fa-comment"></i> Ваш запрос (необязательно)</label>
+            <textarea id="consult-message" placeholder="Кратко опишите, с чем хотели бы поработать..." rows="3"></textarea>
+            <button class="btn btn-block btn-lg btn-success" onclick="submitFreeConsultation()">
+                <i class="fas fa-paper-plane"></i> Отправить заявку
+            </button>
+            <p style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                <i class="fas fa-lock"></i> Ваши данные защищены и не будут переданы третьим лицам
+            </p>
+        </div>
+    </div>
+
+    <div id="b2b-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-building"></i> Корпоративное предложение</h3>
+                <button class="modal-close" onclick="closeModal('b2b-modal')">&times;</button>
+            </div>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                Оставьте контакты и мы подготовим индивидуальное коммерческое предложение для вашей компании.
+            </p>
+            <label><i class="fas fa-building"></i> Название компании</label>
+            <input type="text" id="b2b-company" placeholder="ООО «Компания»">
+            <label><i class="fas fa-user"></i> Ваше имя</label>
+            <input type="text" id="b2b-name" placeholder="Иван Иванов">
+            <label><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="b2b-email" placeholder="hr@company.ru">
+            <label><i class="fas fa-phone"></i> Телефон</label>
+            <input type="tel" id="b2b-phone" placeholder="+7 (___) ___-__-__">
+            <label><i class="fas fa-users"></i> Количество сотрудников</label>
+            <select id="b2b-employees">
+                <option value="">Выберите...</option>
+                <option value="10-50">10-50 человек</option>
+                <option value="50-100">50-100 человек</option>
+                <option value="100-500">100-500 человек</option>
+                <option value="500+">Более 500 человек</option>
+            </select>
+            <button class="btn btn-block btn-lg" style="background: var(--success);" onclick="submitB2BRequest()">
+                <i class="fas fa-paper-plane"></i> Запросить предложение
+            </button>
+        </div>
+    </div>
+
+    <div id="emergency-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color: var(--danger);"><i class="fas fa-phone"></i> Экстренная помощь</h3>
+                <button class="modal-close" onclick="closeModal('emergency-modal')">&times;</button>
+            </div>
+            <div style="text-align: center;">
+                <p style="margin-bottom: 25px;">Телефоны помощи:</p>
+                <div style="background: var(--danger-light); border: 2px solid var(--danger); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                    <p style="font-size: 1.5rem; font-weight: 700; color: var(--danger);">8-800-2000-122</p>
+                    <p>Детский телефон доверия</p>
+                </div>
+                <div style="background: var(--danger-light); border: 2px solid var(--danger); border-radius: 12px; padding: 25px;">
+                    <p style="font-size: 1.5rem; font-weight: 700; color: var(--danger);">112</p>
+                    <p>Экстренная помощь</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        // DATABASE
+        const DB = {
+            experts: [
+                {
+                    id: '1',
+                    firstname: 'Анна',
+                    lastname: 'Смирнова',
+                    photo: null,
+                    specialty: 'Клинический психолог',
+                    worksWith: ['Тревога', 'Депрессия', 'Панические атаки'],
+                    methods: ['КПТ', 'Гештальт'],
+                    experience: 10,
+                    sessionPrice: 2500,
+                    rating: 5.0,
+                    reviewsCount: 120,
+                    verified: true,
+                    status: 'active',
+                    email: 'anna@echo.ru',
+                    password: 'anna123'
+                },
+                {
+                    id: '2',
+                    firstname: 'Игорь',
+                    lastname: 'Петров',
+                    photo: null,
+                    specialty: 'Психотерапевт',
+                    worksWith: ['Депрессия', 'Стресс', 'Выгорание'],
+                    methods: ['КПТ', 'EMDR'],
+                    experience: 7,
+                    sessionPrice: 3000,
+                    rating: 4.8,
+                    reviewsCount: 95,
+                    verified: true,
+                    status: 'active',
+                    email: 'igor@echo.ru',
+                    password: 'igor123'
+                },
+                {
+                    id: '3',
+                    firstname: 'Алла',
+                    lastname: 'Марданашвили',
+                    patronymic: 'Владимировна',
+                    photo: null,
+                    specialty: 'Клинический психолог, КПТ-терапевт',
+                    worksWith: ['Тревожные расстройства', 'Депрессия', 'Панические атаки', 'Фобии', 'Низкая самооценка'],
+                    methods: ['КПТ', 'МАК', 'Мультимодальная терапия'],
+                    experience: 7,
+                    sessionPrice: 2000,
+                    rating: 4.9,
+                    reviewsCount: 12,
+                    verified: true,
+                    status: 'active',
+                    email: 'igor.ylitka1992@mail.ru',
+                    password: 'alla123'
+                }
+            ],
+            users: [],
+            sessions: [],
+            blogPosts: [
+                {
+                    id: '1',
+                    title: 'Как справиться с тревожностью: 7 работающих техник',
+                    category: 'Тревога',
+                    excerpt: 'Практические методы, которые помогут снизить уровень тревоги и вернуть спокойствие...',
+                    author: 'Анна Смирнова',
+                    authorRole: 'expert',
+                    date: '10 марта 2024',
+                    readTime: '8 мин'
+                },
+                {
+                    id: '2',
+                    title: 'Почему вы не высыпаетесь и как это исправить',
+                    category: 'Сон',
+                    excerpt: 'Научный подход к качественному сну: ритуалы, техники и распространённые ошибки...',
+                    author: 'Игорь Петров',
+                    authorRole: 'expert',
+                    date: '8 марта 2024',
+                    readTime: '10 мин'
+                },
+                {
+                    id: '3',
+                    title: 'Профилактика выгорания: признаки и решения',
+                    category: 'Работа',
+                    excerpt: 'Как распознать эмоциональное выгорание на ранней стадии и что делать...',
+                    author: 'Алла Марданашвили',
+                    authorRole: 'expert',
+                    date: '5 марта 2024',
+                    readTime: '12 мин'
+                }
+            ],
+            pricing: 'free'
+        };
+
+        // Practice content
+        const practices = {
+            meditation: {
+                title: 'Медитация осознанности',
+                desc: 'Научитесь управлять вниманием и снижать уровень тревоги через практику осознанности.',
+                duration: 15,
+                steps: [
+                    'Найдите тихое место, где вас не побеспокоят',
+                    'Сядьте удобно с прямой спиной',
+                    'Закройте глаза и сделайте 3 глубоких вдоха',
+                    'Наблюдайте за своим дыханием, не контролируя его',
+                    'Когда мысли приходят, просто отмечайте их и возвращайтесь к дыханию',
+                    'Продолжайте 15 минут',
+                    'Медленно откройте глаза и поблагодарите себя за практику'
+                ]
+            },
+            breathing: {
+                title: 'Дыхательные техники',
+                desc: 'Эффективные упражнения для быстрого снятия стресса и панических атак.',
+                duration: 10,
+                steps: [
+                    'Сядьте или лягте удобно',
+                    'Вдохните через нос на 4 счёта',
+                    'Задержите дыхание на 4 счёта',
+                    'Выдохните через рот на 6 счетов',
+                    'Повторите 10 раз',
+                    'Обратите внимание на изменения в состоянии',
+                    'Поблагодарите себя за заботу о себе'
+                ]
+            },
+            journaling: {
+                title: 'Дневник эмоций',
+                desc: 'Практика ведения дневника для понимания своих эмоций и триггеров.',
+                duration: 20,
+                steps: [
+                    'Возьмите тетрадь или откройте документ',
+                    'Напишите текущую дату и время',
+                    'Опишите, что вы чувствуете прямо сейчас',
+                    'Что произошло сегодня?',
+                    'Какие мысли приходят?',
+                    'Что вы можете сделать для себя?',
+                    'Завершите записью благодарности'
+                ]
+            },
+            grounding: {
+                title: 'Техники заземления',
+                desc: 'Методы возвращения в «здесь и сейчас» при тревоге и панических атаках.',
+                duration: 5,
+                steps: [
+                    'Назовите 5 вещей, которые вы видите',
+                    'Назовите 4 вещи, которые вы можете потрогать',
+                    'Назовите 3 звука, которые вы слышите',
+                    'Назовите 2 запаха, которые вы чувствуете',
+                    'Назовите 1 вещь, которую вы можете попробовать на вкус',
+                    'Сделайте глубокий вдох и выдох',
+                    'Почувствуйте связь с настоящим моментом'
+                ]
+            },
+            sleep: {
+                title: 'Ритуал перед сном',
+                desc: 'Вечерние практики для качественного сна и восстановления.',
+                duration: 30,
+                steps: [
+                    'Выключите все экраны за 1 час до сна',
+                    'Примите тёплую ванну или душ',
+                    'Выпейте травяной чай',
+                    'Почитайте книгу при мягком свете',
+                    'Сделайте лёгкую растяжку',
+                    'Поблагодарите за прошедший день',
+                    'Лягте в кровать и расслабьтесь'
+                ]
+            },
+            selfcare: {
+                title: 'Самоподдержка',
+                desc: 'Техники развития доброго отношения к себе и самоподдержки.',
+                duration: 15,
+                steps: [
+                    'Сядьте удобно и закройте глаза',
+                    'Положите руку на сердце',
+                    'Скажите себе: «Я делаю всё, что могу»',
+                    '«Я заслуживаю доброго отношения»',
+                    '«Я принимаю себя таким, какой я есть»',
+                    'Почувствуйте тепло своей руки',
+                    'Откройте глаза и улыбнитесь себе'
+                ]
+            }
+        };
+
+        let currentUser = null;
+        let currentRole = null;
+        let selectedExpert = null;
+        let currentMonth = new Date();
+        let currentPractice = null;
+        let practiceStep = 0;
+        let practiceTimer = null;
+        let practiceRunning = false;
+
+        window.addEventListener('load', function() {
+            initDB();
+            checkSession();
+            loadExperts();
+            loadBlogPosts();
+            renderCalendar();
+        });
+
+        function initDB() {
+            const savedUsers = localStorage.getItem('echo_users');
+            const savedSessions = localStorage.getItem('echo_sessions');
+            const savedBlogPosts = localStorage.getItem('echo_blog_posts');
+            
+            if(savedUsers) {
+                DB.users = JSON.parse(savedUsers);
+            } else {
+                DB.users = [
+                    {id: 'test1', name: 'Тестовый клиент', email: 'test@test.ru', password: 'test123', role: 'client'}
+                ];
+                localStorage.setItem('echo_users', JSON.stringify(DB.users));
+            }
+            
+            if(savedSessions) {
+                DB.sessions = JSON.parse(savedSessions);
+            } else {
+                DB.sessions = [];
+            }
+            
+            if(savedBlogPosts) {
+                DB.blogPosts = JSON.parse(savedBlogPosts);
+            }
+        }
+
+        function saveDB() {
+            localStorage.setItem('echo_users', JSON.stringify(DB.users));
+            localStorage.setItem('echo_sessions', JSON.stringify(DB.sessions));
+            localStorage.setItem('echo_blog_posts', JSON.stringify(DB.blogPosts));
+            localStorage.setItem('echo_pricing', DB.pricing);
+        }
+
+        function checkSession() {
+            const saved = localStorage.getItem('echo_current_user');
+            if(saved) {
+                const user = JSON.parse(saved);
+                currentUser = user;
+                currentRole = user.role;
+                showLoggedInState();
+                updateNavigation();
+                updateBlogSection();
+            } else {
+                showLoggedOutState();
+            }
+        }
+
+        function showLoggedInState() {
+            document.getElementById('auth-btn').classList.add('hidden');
+            document.getElementById('register-btn').classList.add('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('user-name').innerText = currentUser.name || currentUser.email.split('@')[0];
+        }
+
+        function showLoggedOutState() {
+            document.getElementById('auth-btn').classList.remove('hidden');
+            document.getElementById('register-btn').classList.remove('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+        }
+
+        function updateNavigation() {
+            const navMenu = document.getElementById('nav-menu');
+            if(currentRole === 'expert') {
+                navMenu.innerHTML = `
+                    <a class="nav-link" onclick="navigate('home')">Главная</a>
+                    <a class="nav-link" onclick="navigate('expert-calendar')">Календарь</a>
+                    <a class="nav-link" onclick="navigate('blog')">Блог</a>
+                `;
+            } else if(currentRole === 'client') {
+                navMenu.innerHTML = `
+                    <a class="nav-link" onclick="navigate('home')">Главная</a>
+                    <a class="nav-link" onclick="navigate('practices')">Практики</a>
+                    <a class="nav-link" onclick="navigate('experts')">Специалисты</a>
+                    <a class="nav-link" onclick="navigate('blog')">Блог</a>
+                `;
+            }
+        }
+
+        function updateBlogSection() {
+            const writeSection = document.getElementById('blog-write-section');
+            if(currentRole === 'expert' || currentRole === 'client') {
+                writeSection.classList.remove('hidden');
+            } else {
+                writeSection.classList.add('hidden');
+            }
+        }
+
+        function navigate(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function switchModalAuthTab(type) {
+            document.querySelectorAll('#auth-modal .auth-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('modal-client-auth-form').classList.add('hidden');
+            document.getElementById('modal-expert-auth-form').classList.add('hidden');
+            document.getElementById('modal-' + type + '-auth-form').classList.remove('hidden');
+        }
+
+        function switchRegisterTab(type) {
+            document.querySelectorAll('#register-modal .auth-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('register-client-form').classList.add('hidden');
+            document.getElementById('register-expert-form').classList.add('hidden');
+            document.getElementById('register-' + type + '-form').classList.remove('hidden');
+        }
+
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.add('show');
+            document.getElementById('auth-modal').style.display = 'flex';
+        }
+
+        function openRegisterModal() {
+            document.getElementById('register-modal').classList.add('show');
+            document.getElementById('register-modal').style.display = 'flex';
+        }
+
+        function openFreeConsultationModal() {
+            document.getElementById('free-consultation-modal').classList.add('show');
+            document.getElementById('free-consultation-modal').style.display = 'flex';
+        }
+
+        function openB2BModal() {
+            document.getElementById('b2b-modal').classList.add('show');
+            document.getElementById('b2b-modal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+        }
+
+        function modalClientAuth() {
+            const email = document.getElementById('modal-client-email').value.trim();
+            const password = document.getElementById('modal-client-password').value;
+            
+            const user = DB.users.find(u => u.email === email && u.password === password && u.role === 'client');
+            if(!user) { showToast('Неверные данные', 'error'); return; }
+            
+            loginUser({ name: user.name, email: user.email, id: user.id, role: 'client' });
+            closeModal('auth-modal');
+        }
+
+        function modalExpertAuth() {
+            const email = document.getElementById('modal-expert-email').value.trim();
+            const password = document.getElementById('modal-expert-password').value;
+            
+            const expert = DB.experts.find(e => e.email === email && e.password === password);
+            if(!expert) { showToast('Неверные данные', 'error'); return; }
+            
+            loginUser({ name: expert.firstname + ' ' + expert.lastname, email: expert.email, id: expert.id, role: 'expert' });
+            closeModal('auth-modal');
+            showToast('Вход выполнен! Добро пожаловать!', 'success');
+        }
+
+        function loginUser(user) {
+            currentUser = user;
+            currentRole = user.role;
+            localStorage.setItem('echo_current_user', JSON.stringify(user));
+            showToast('Вход выполнен!', 'success');
+            showLoggedInState();
+            updateNavigation();
+            updateBlogSection();
+        }
+
+        function registerClient() {
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value;
+            
+            if(!name || !email || !password) { showToast('Заполните все поля', 'error'); return; }
+            if(password.length < 6) { showToast('Пароль должен содержать минимум 6 символов', 'error'); return; }
+            if(DB.users.find(u => u.email === email)) { showToast('Email уже зарегистрирован', 'error'); return; }
+            
+            const user = { id: Date.now().toString(), name: name, email: email, password: password, role: 'client' };
+            DB.users.push(user);
+            saveDB();
+            
+            showToast('Регистрация успешна! Теперь войдите.', 'success');
+            closeModal('register-modal');
+            openAuthModal();
+        }
+
+        function submitExpertApplication() {
+            showToast('Заявка отправлена! Ожидайте модерации 1-3 дня.', 'success');
+            closeModal('register-modal');
+        }
+
+        function submitFreeConsultation() {
+            const name = document.getElementById('consult-name').value;
+            const email = document.getElementById('consult-email').value;
+            const phone = document.getElementById('consult-phone').value;
+            
+            if(!name || !email || !phone) { showToast('Заполните обязательные поля', 'error'); return; }
+            
+            showToast('Заявка отправлена! Мы свяжемся с вами в течение 24 часов.', 'success');
+            closeModal('free-consultation-modal');
+        }
+
+        function submitB2BRequest() {
+            const company = document.getElementById('b2b-company').value;
+            const name = document.getElementById('b2b-name').value;
+            const email = document.getElementById('b2b-email').value;
+            const phone = document.getElementById('b2b-phone').value;
+            const employees = document.getElementById('b2b-employees').value;
+            
+            if(!company || !name || !email || !phone || !employees) { showToast('Заполните все поля', 'error'); return; }
+            
+            showToast('Заявка отправлена! Мы подготовим предложение в течение 2 рабочих дней.', 'success');
+            closeModal('b2b-modal');
+        }
+
+        function selectPricing(plan) {
+            if(!currentUser) { showToast('Войдите для выбора тарифа', 'error'); openAuthModal(); return; }
+            DB.pricing = plan;
+            saveDB();
+            showToast('Тариф "' + plan + '" выбран!', 'success');
+        }
+
+        function joinGroupSession(sessionId) {
+            if(!currentUser) { showToast('Войдите для записи', 'error'); openAuthModal(); return; }
+            showToast('Запись на групповую сессию подтверждена!', 'success');
+        }
+
+        function openPractice(practiceType) {
+            showToast('Практика открывается...', 'info');
+        }
+
+        // NEW: Interactive Practice
+        function startPractice(practiceType) {
+            if(!currentUser) { showToast('Войдите для доступа к практикам', 'error'); openAuthModal(); return; }
+            
+            currentPractice = practices[practiceType];
+            practiceStep = 0;
+            practiceRunning = false;
+            
+            if(!currentPractice) { showToast('Практика не найдена', 'error'); return; }
+            
+            document.getElementById('practice-modal-title').innerHTML = `<i class="fas fa-spa"></i> ${currentPractice.title}`;
+            document.getElementById('practice-modal-desc').innerText = currentPractice.desc;
+            document.getElementById('practice-timer').innerText = `${currentPractice.duration}:00`;
+            
+            renderPracticeSteps();
+            
+            document.getElementById('practice-modal').classList.add('show');
+            document.getElementById('practice-modal').style.display = 'flex';
+        }
+
+        function renderPracticeSteps() {
+            const stepsContainer = document.getElementById('practice-steps');
+            stepsContainer.innerHTML = currentPractice.steps.map((step, index) => `
+                <div class="practice-step ${index === practiceStep ? 'active' : ''}" id="step-${index}">
+                    <span class="practice-step-number">${index + 1}</span>
+                    <span>${step}</span>
+                </div>
+            `).join('');
+        }
+
+        function togglePractice() {
+            const btn = document.getElementById('practice-start-btn');
+            if(practiceRunning) {
+                clearInterval(practiceTimer);
+                practiceRunning = false;
+                btn.innerHTML = '<i class="fas fa-play"></i> Продолжить';
+            } else {
+                practiceRunning = true;
+                btn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+                startTimer();
+            }
+        }
+
+        function startTimer() {
+            let timeLeft = currentPractice.duration * 60;
+            practiceTimer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('practice-timer').innerText = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if(timeLeft <= 0) {
+                    clearInterval(practiceTimer);
+                    practiceRunning = false;
+                    showToast('Практика завершена! Отличная работа!', 'success');
+                    document.getElementById('practice-start-btn').innerHTML = '<i class="fas fa-check"></i> Завершено';
+                }
+            }, 1000);
+        }
+
+        function nextStep() {
+            if(practiceStep < currentPractice.steps.length - 1) {
+                practiceStep++;
+                renderPracticeSteps();
+            }
+        }
+
+        function previousStep() {
+            if(practiceStep > 0) {
+                practiceStep--;
+                renderPracticeSteps();
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            currentRole = null;
+            localStorage.removeItem('echo_current_user');
+            showLoggedOutState();
+            navigate('home');
+            showToast('Выход выполнен', 'info');
+        }
+
+        function loadExperts() {
+            const expertsList = document.getElementById('experts-list');
+            if(!expertsList) return;
+            
+            expertsList.innerHTML = DB.experts.map(expert => {
+                const initials = expert.firstname.charAt(0) + expert.lastname.charAt(0);
+                
+                return `
+                <div class="expert-card" onclick="openExpertProfile('${expert.id}')">
+                    ${expert.photo ? 
+                        `<img src="${expert.photo}" alt="${expert.firstname} ${expert.lastname}" class="expert-photo" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">` :
+                        `<div class="expert-photo-placeholder">${initials}</div>`
+                    }
+                    
+                    <div class="expert-header">
+                        <div class="expert-name">${expert.firstname} ${expert.lastname}${expert.patronymic ? ' ' + expert.patronymic : ''}</div>
+                        <div class="expert-spec">${expert.specialty}</div>
+                        <div class="expert-rating">
+                            ${getStars(expert.rating)}
+                            <span style="margin-left: 8px; color: var(--text-secondary);">${expert.rating} (${expert.reviewsCount} отзывов)</span>
+                        </div>
+                        ${expert.verified ? '<span class="expert-badge"><i class="fas fa-check-circle"></i> Проверенный специалист</span>' : ''}
+                    </div>
+                    
+                    <div style="margin: 15px 0;">
+                        <strong style="color: var(--text-primary); font-size: 0.95rem;">
+                            <i class="fas fa-briefcase-medical"></i> С чем работает:
+                        </strong>
+                        <div class="expert-works-with">
+                            ${expert.worksWith.slice(0, 5).map(tag => `<span class="expert-work-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 15px 0;">
+                        <strong style="color: var(--text-primary); font-size: 0.95rem;">
+                            <i class="fas fa-graduation-cap"></i> Методы:
+                        </strong>
+                        <ul class="expert-methods-list">
+                            ${expert.methods.map(method => `<li>• ${method}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="expert-info-row">
+                        <div class="expert-experience">
+                            <div style="margin-bottom: 5px;"><i class="fas fa-clock"></i> Опыт: ${expert.experience}+ лет</div>
+                            <div><i class="fas fa-award"></i> ${expert.reviewsCount} отзывов</div>
+                        </div>
+                        <div class="expert-price">
+                            <div class="expert-price-value">${expert.sessionPrice}₽</div>
+                            <div class="expert-price-label">за сессию</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-success btn-block" style="margin-top: 20px;" 
+                            onclick="event.stopPropagation(); openBooking('${expert.id}', '${expert.firstname} ${expert.lastname}', ${expert.sessionPrice})">
+                        <i class="fas fa-calendar-plus"></i> Записаться
+                    </button>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function getStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalf = rating % 1 !== 0;
+            let stars = '';
+            for(let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+            if(hasHalf) stars += '<i class="fas fa-star-half-alt"></i>';
+            return stars;
+        }
+
+        function openExpertProfile(expertId) {
+            const expert = DB.experts.find(e => e.id === expertId);
+            if(!expert) return;
+            showToast(`Профиль: ${expert.firstname} ${expert.lastname}`, 'info');
+        }
+
+        function openBooking(expertId, expertName, price) {
+            if(!currentUser) { showToast('Войдите для записи', 'error'); openAuthModal(); return; }
+            selectedExpert = {id: expertId, name: expertName, price: price};
+            document.getElementById('booking-expert-name').innerText = expertName;
+            document.getElementById('booking-price').innerText = price + '₽';
+            document.getElementById('booking-modal').classList.add('show');
+            document.getElementById('booking-modal').style.display = 'flex';
+        }
+
+        function confirmBooking() {
+            const date = document.getElementById('booking-date').value;
+            const time = document.getElementById('booking-time').value;
+            const format = document.getElementById('booking-format').value;
+            
+            if(!date || !time) { showToast('Выберите дату и время', 'error'); return; }
+            
+            const expertPayout = Math.round(selectedExpert.price * 0.65);
+            const platformFee = Math.round(selectedExpert.price * 0.35);
+            
+            const session = {
+                id: Date.now().toString(),
+                expertId: selectedExpert.id,
+                expertName: selectedExpert.name,
+                clientId: currentUser.id,
+                clientEmail: currentUser.email,
+                clientName: currentUser.name,
+                date: date,
+                time: time,
+                format: format,
+                price: selectedExpert.price,
+                expertPayout: expertPayout,
+                platformFee: platformFee,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+            
+            DB.sessions.push(session);
+            saveDB();
+            
+            showToast('Запись подтверждена! Сессия добавлена в календарь специалиста.', 'success');
+            closeModal('booking-modal');
+            renderCalendar();
+        }
+
+        // NEW: Blog Functions
+        function loadBlogPosts() {
+            const blogList = document.getElementById('blog-list');
+            if(!blogList) return;
+            
+            blogList.innerHTML = DB.blogPosts.map(post => `
+                <div class="blog-card">
+                    <div class="blog-image"><i class="fas fa-newspaper"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category">${post.category}</span>
+                        <h3 class="blog-title">${post.title}</h3>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-user"></i> ${post.author}</span>
+                            <span><i class="fas fa-calendar"></i> ${post.date}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function publishBlogPost() {
+            if(!currentUser) { showToast('Войдите для публикации', 'error'); openAuthModal(); return; }
+            
+            const title = document.getElementById('blog-title').value.trim();
+            const category = document.getElementById('blog-category').value;
+            const content = document.getElementById('blog-content').value.trim();
+            
+            if(!title || !content) { showToast('Заполните заголовок и содержание', 'error'); return; }
+            
+            const newPost = {
+                id: Date.now().toString(),
+                title: title,
+                category: category,
+                excerpt: content.substring(0, 100) + '...',
+                content: content,
+                author: currentUser.name,
+                authorRole: currentRole,
+                date: new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }),
+                readTime: '5 мин'
+            };
+            
+            DB.blogPosts.unshift(newPost);
+            saveDB();
+            loadBlogPosts();
+            
+            document.getElementById('blog-title').value = '';
+            document.getElementById('blog-content').value = '';
+            
+            showToast('Статья опубликована!', 'success');
+        }
+
+        // NEW: Calendar Functions
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            if(!grid) return;
+            
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+            
+            document.getElementById('calendar-month').innerText = new Date(year, month).toLocaleDateString('ru', { month: 'long', year: 'numeric' });
+            
+            // Clear grid
+            grid.innerHTML = '';
+            
+            // Day headers
+            const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            days.forEach(day => {
+                grid.innerHTML += `<div class="calendar-day-header">${day}</div>`;
+            });
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const offset = firstDay === 0 ? 6 : firstDay - 1;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Empty cells for days before month starts
+            for(let i = 0; i < offset; i++) {
+                grid.innerHTML += '<div></div>';
+            }
+            
+            // Days of month
+            const today = new Date();
+            for(let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+                
+                // Find sessions for this day
+                const daySessions = DB.sessions.filter(s => s.date === dateStr);
+                
+                let eventsHtml = '';
+                if(currentRole === 'expert') {
+                    const expertSessions = daySessions.filter(s => s.expertId === currentUser.id);
+                    eventsHtml = expertSessions.map(s => `
+                        <div class="calendar-event client">
+                            ${s.time} ${s.clientName}
+                        </div>
+                    `).join('');
+                } else {
+                    const clientSessions = daySessions.filter(s => s.clientId === currentUser?.id);
+                    eventsHtml = clientSessions.map(s => `
+                        <div class="calendar-event">
+                            ${s.time} ${s.expertName}
+                        </div>
+                    `).join('');
+                }
+                
+                grid.innerHTML += `
+                    <div class="calendar-day ${isToday ? 'today' : ''}">
+                        <div class="calendar-day-number">${day}</div>
+                        ${eventsHtml}
+                    </div>
+                `;
+            }
+        }
+
+        function previousMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth.setMonth(currentMonth.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function openEmergencyModal() {
+            document.getElementById('emergency-modal').classList.add('show');
+            document.getElementById('emergency-modal').style.display = 'flex';
+        }
+
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        window.onclick = function(event) {
+            if(event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        };
+    </script>
+</body>
+</html>
