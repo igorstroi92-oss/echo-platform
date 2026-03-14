@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭХО PRO | Платформа психологической помощи</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-light: #e0e7ff;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --border: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Manrope', sans-serif;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --text-muted: #6b7280;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        
+        * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 15px;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        h1, h2, h3 { font-family: var(--font-heading); font-weight: 700; line-height: 1.2; }
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.25rem; }
+        h3 { font-size: 1.5rem; }
+        
+        header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: var(--font-heading);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--accent); }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+        
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--success-light);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .theme-toggle, .notification-bell {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: 0.3s;
+        }
+        .theme-toggle:hover, .notification-bell:hover { background: var(--accent); color: white; }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+        
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            font-family: var(--font-body);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #059669; }
+        .btn-warning { background: var(--warning); color: #000; }
+        .btn-danger { background: var(--danger); }
+        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text-primary); }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-lg { padding: 16px 40px; font-size: 1.1rem; }
+        .btn-block { width: 100%; justify-content: center; }
+        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+        
+        .quick-actions {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 998;
+        }
+        .quick-action-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            transition: 0.3s;
+        }
+        .quick-action-btn:hover { transform: scale(1.1); }
+        .quick-action-btn.mood { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .quick-action-btn.favorites { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .quick-action-btn.chat { background: linear-gradient(135deg, #10b981, #059669); }
+        .quick-action-btn.crisis { background: linear-gradient(135deg, #ef4444, #dc2626); animation: pulse 2s infinite; }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+        }
+        
+        main { flex: 1; max-width: 1200px; width: 100%; margin: 0 auto; padding: 40px 20px; }
+        
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--accent-light) 0%, #f0f9ff 100%);
+            border-radius: 24px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .hero { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%); }
+        .hero-badge {
+            display: inline-block;
+            background: var(--success-light);
+            color: var(--success);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .hero h1 { color: var(--text-primary); margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 40px; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .hero-stats { display: flex; justify-content: center; gap: 60px; margin-top: 60px; flex-wrap: wrap; }
+        .hero-stat { text-align: center; }
+        .hero-stat-value { font-size: 2.5rem; font-weight: 800; color: var(--accent); font-family: var(--font-heading); }
+        .hero-stat-label { font-size: 0.95rem; color: var(--text-secondary); margin-top: 5px; }
+        
+        .matching-section {
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--success-light) 100%);
+            border-radius: 24px;
+            padding: 50px 40px;
+            margin: 60px 0;
+            text-align: center;
+        }
+        [data-theme="dark"] .matching-section { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%); }
+        .matching-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 40px; }
+        .matching-step { background: var(--bg-card); padding: 30px; border-radius: 16px; box-shadow: var(--shadow); }
+        .matching-step-icon { font-size: 3rem; color: var(--accent); margin-bottom: 15px; }
+        .matching-step-title { font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+        .matching-step-desc { color: var(--text-secondary); font-size: 0.95rem; }
+        
+        .lead-magnet {
+            background: linear-gradient(135deg, var(--success-light) 0%, var(--accent-light) 100%);
+            border: 2px solid var(--success);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+        }
+        [data-theme="dark"] .lead-magnet { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%); }
+        
+        .premium-section {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 24px;
+            padding: 50px 40px;
+            margin: 60px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-section::before { content: '⭐'; position: absolute; top: 30px; right: 40px; font-size: 5rem; opacity: 0.2; }
+        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 30px; }
+        .premium-card { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); padding: 25px; border-radius: 16px; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .premium-card-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .premium-card-title { font-weight: 700; margin-bottom: 10px; font-size: 1.1rem; }
+        .premium-card-desc { font-size: 0.95rem; opacity: 0.95; }
+        
+        .practices-section { margin: 60px 0; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { margin-bottom: 15px; }
+        .section-title p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .practices-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .practice-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .practice-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-5px); }
+        .practice-icon { width: 70px; height: 70px; background: var(--accent-light); color: var(--accent); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 20px; }
+        .practice-title { font-size: 1.25rem; margin-bottom: 12px; color: var(--text-primary); }
+        .practice-desc { color: var(--text-secondary); line-height: 1.7; margin-bottom: 15px; }
+        .practice-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-muted); }
+        
+        .testimonials-section { margin: 60px 0; background: var(--bg-secondary); padding: 60px 40px; border-radius: 24px; }
+        [data-theme="dark"] .testimonials-section { background: rgba(255, 255, 255, 0.05); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 40px; }
+        .testimonial-card { background: var(--bg-card); border-radius: 16px; padding: 30px; box-shadow: var(--shadow); position: relative; }
+        .testimonial-rating { color: #fbbf24; margin-bottom: 15px; font-size: 1.1rem; }
+        .testimonial-text { color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+        .testimonial-avatar { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #818cf8); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem; }
+        .testimonial-info { flex: 1; }
+        .testimonial-name { font-weight: 600; color: var(--text-primary); }
+        .testimonial-date { font-size: 0.85rem; color: var(--text-muted); }
+        
+        .group-sessions-section { margin: 60px 0; }
+        .group-session-card {
+            background: linear-gradient(135deg, var(--accent-light) 0%, #f0f9ff 100%);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        [data-theme="dark"] .group-session-card { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%); }
+        .group-session-card::before {
+            content: '🔴 LIVE';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: var(--danger);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .group-session-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-right: 100px; }
+        .group-session-title { font-size: 1.5rem; margin-bottom: 10px; color: var(--text-primary); }
+        .group-session-meta { display: flex; gap: 25px; color: var(--text-secondary); font-size: 0.95rem; }
+        .group-session-meta span { display: flex; align-items: center; gap: 8px; }
+        .group-session-desc { color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+        .group-session-expert { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .group-session-expert-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #818cf8); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; }
+        .group-session-expert-info { flex: 1; }
+        .group-session-expert-name { font-weight: 600; color: var(--text-primary); }
+        .group-session-expert-spec { font-size: 0.85rem; color: var(--text-secondary); }
+        
+        .pricing-section { margin: 60px 0; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .pricing-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 20px; padding: 35px; text-align: center; transition: 0.3s; position: relative; }
+        .pricing-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .pricing-card.popular { border-color: var(--accent); background: linear-gradient(135deg, var(--accent-light) 0%, #f0f9ff 100%); transform: scale(1.05); }
+        [data-theme="dark"] .pricing-card.popular { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(14, 165, 233, 0.1) 100%); }
+        .pricing-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 6px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .pricing-card.b2b { border-color: var(--success); background: linear-gradient(135deg, var(--success-light) 0%, #f0fdf4 100%); grid-column: span 2; }
+        [data-theme="dark"] .pricing-card.b2b { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%); }
+        .pricing-icon { font-size: 3rem; margin-bottom: 20px; color: var(--accent); }
+        .pricing-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
+        .pricing-price { font-size: 3rem; font-weight: 800; color: var(--accent); margin: 20px 0; }
+        .pricing-price span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; }
+        .pricing-features { list-style: none; text-align: left; margin: 25px 0; }
+        .pricing-features li { padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+        .pricing-features li:last-child { border-bottom: none; }
+        .pricing-features li i { color: var(--success); }
+        .b2b-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; text-align: left; margin: 25px 0; }
+        .b2b-feature { display: flex; align-items: center; gap: 10px; padding: 10px; background: white; border-radius: 8px; }
+        [data-theme="dark"] .b2b-feature { background: rgba(255, 255, 255, 0.05); }
+        .b2b-feature i { color: var(--success); font-size: 1.2rem; }
+        
+        .payment-packages { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin: 60px 0; }
+        .packages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 30px; }
+        .package-card { background: linear-gradient(135deg, var(--accent-light) 0%, var(--success-light) 100%); border-radius: 16px; padding: 30px; text-align: center; border: 2px solid var(--accent); position: relative; }
+        [data-theme="dark"] .package-card { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%); }
+        .package-card.best-value { border-color: var(--success); transform: scale(1.05); }
+        .package-card.best-value::before { content: 'ВЫГОДНО'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--success); color: white; padding: 6px 20px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .package-sessions { font-size: 2.5rem; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
+        .package-price { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 20px; }
+        .package-old-price { text-decoration: line-through; color: var(--text-muted); font-size: 1.1rem; }
+        .package-save { background: var(--success); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-top: 10px; display: inline-block; }
+        
+        .gift-certificate { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 16px; padding: 40px; color: white; text-align: center; margin: 30px 0; position: relative; overflow: hidden; }
+        .gift-certificate::before { content: '🎁'; position: absolute; top: 20px; right: 30px; font-size: 4rem; opacity: 0.3; }
+        .gift-amount { font-size: 3rem; font-weight: 800; margin: 20px 0; }
+        
+        .blog-section { margin: 60px 0; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .blog-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: 0.3s; cursor: pointer; }
+        .blog-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-5px); }
+        .blog-image { width: 100%; height: 200px; background: linear-gradient(135deg, var(--accent), #818cf8); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; }
+        .blog-content { padding: 25px; }
+        .blog-category { display: inline-block; background: var(--accent-light); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 12px; }
+        .blog-title { font-size: 1.2rem; margin-bottom: 12px; color: var(--text-primary); }
+        .blog-excerpt { color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px; }
+        .blog-meta { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); }
+        
+        .loyalty-section { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 24px; padding: 60px 40px; margin: 60px 0; text-align: center; color: white; position: relative; overflow: hidden; }
+        .loyalty-section::before { content: '🏆'; position: absolute; top: 30px; right: 40px; font-size: 5rem; opacity: 0.2; }
+        .loyalty-section h2 { margin-bottom: 15px; color: white; }
+        .loyalty-section p { max-width: 600px; margin: 0 auto 30px; opacity: 0.95; }
+        .loyalty-benefits { display: flex; justify-content: center; gap: 40px; margin-top: 30px; flex-wrap: wrap; }
+        .loyalty-benefit { text-align: center; }
+        .loyalty-benefit-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .loyalty-benefit-title { font-weight: 600; margin-bottom: 5px; }
+        .loyalty-benefit-desc { font-size: 0.9rem; opacity: 0.9; }
+        
+        .experts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+        .expert-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; transition: 0.3s; cursor: pointer; }
+        .expert-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-5px); }
+        .expert-photo { width: 100%; height: 280px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
+        .expert-photo-placeholder { width: 100%; height: 280px; background: linear-gradient(135deg, var(--accent), #818cf8); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem; font-weight: 700; }
+        .expert-name { font-weight: 700; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 5px; }
+        .expert-spec { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 10px; }
+        .expert-rating { color: #fbbf24; font-size: 0.95rem; margin-bottom: 10px; }
+        .expert-badge { display: inline-block; background: var(--success-light); color: var(--success); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .expert-works-with { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
+        .expert-work-tag { background: var(--accent-light); color: var(--accent); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+        .expert-methods-list { margin: 15px 0; padding-left: 20px; color: var(--text-secondary); font-size: 0.9rem; }
+        .expert-methods-list li { margin-bottom: 8px; line-height: 1.5; }
+        .expert-info-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+        .expert-experience { font-size: 0.85rem; color: var(--text-secondary); }
+        .expert-price { text-align: right; }
+        .expert-price-value { font-size: 1.8rem; font-weight: 700; color: var(--success); }
+        .expert-price-label { font-size: 0.85rem; color: var(--text-muted); }
+        
+        .mood-tracker { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin: 60px 0; }
+        .mood-options { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+        .mood-option { font-size: 3rem; cursor: pointer; transition: 0.3s; padding: 10px; border-radius: 12px; }
+        .mood-option:hover { transform: scale(1.2); background: var(--accent-light); }
+        .mood-option.selected { background: var(--accent); transform: scale(1.2); }
+        
+        .progress-dashboard { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin: 60px 0; }
+        .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+        .progress-stat { text-align: center; padding: 20px; background: var(--bg-secondary); border-radius: 12px; }
+        .progress-stat-value { font-size: 2rem; font-weight: 700; color: var(--accent); }
+        .progress-stat-label { font-size: 0.9rem; color: var(--text-secondary); margin-top: 5px; }
+        
+        .homework-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin: 60px 0; }
+        .homework-list { margin-top: 20px; }
+        .homework-item { background: var(--bg-secondary); border-radius: 12px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .homework-item:hover { border-color: var(--accent); }
+        .homework-item.completed { opacity: 0.6; background: var(--success-light); }
+        .homework-info { flex: 1; }
+        .homework-title { font-weight: 600; margin-bottom: 5px; }
+        .homework-due { font-size: 0.85rem; color: var(--text-secondary); }
+        .homework-actions { display: flex; gap: 10px; }
+        
+        .chat-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin: 60px 0; }
+        .chat-container { display: grid; grid-template-columns: 280px 1fr; gap: 20px; height: 500px; }
+        .chat-list { background: var(--bg-secondary); border-radius: 12px; padding: 15px; overflow-y: auto; }
+        .chat-item { padding: 15px; border-radius: 10px; cursor: pointer; margin-bottom: 10px; transition: 0.3s; }
+        .chat-item:hover, .chat-item.active { background: var(--accent-light); }
+        .chat-messages { background: var(--bg-secondary); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; }
+        .messages-box { flex: 1; overflow-y: auto; margin-bottom: 20px; padding: 10px; }
+        .message { margin-bottom: 15px; max-width: 70%; padding: 12px 18px; border-radius: 14px; font-size: 0.95rem; }
+        .message.sent { background: var(--accent); color: white; align-self: flex-end; margin-left: auto; }
+        .message.received { background: var(--bg-card); color: var(--text-primary); align-self: flex-start; }
+        .message-input-container { display: flex; gap: 10px; }
+        
+        .privacy-controls { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; margin: 60px 0; }
+        .privacy-option { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border); }
+        .privacy-option:last-child { border-bottom: none; }
+        .privacy-option-info { flex: 1; }
+        .privacy-option-title { font-weight: 600; margin-bottom: 5px; }
+        .privacy-option-desc { font-size: 0.85rem; color: var(--text-secondary); }
+        .toggle-switch { position: relative; width: 60px; height: 30px; background: var(--border); border-radius: 15px; cursor: pointer; transition: 0.3s; }
+        .toggle-switch.active { background: var(--success); }
+        .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: 0.3s; }
+        .toggle-switch.active::after { left: 33px; }
+        
+        .crisis-alert { background: var(--danger-light); border: 2px solid var(--danger); border-radius: 12px; padding: 25px; margin: 20px 0; text-align: center; }
+        .crisis-alert-title { color: var(--danger); font-weight: 700; font-size: 1.25rem; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .crisis-alert-buttons { display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal.show { display: flex !important; }
+        .modal-content { background: var(--bg-primary); padding: 40px; border-radius: 20px; max-width: 700px; width: 90%; border: 1px solid var(--border); max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
+        .modal-close:hover { color: var(--danger); }
+        
+        .practice-steps { margin: 20px 0; }
+        .practice-step { background: var(--bg-secondary); border-left: 4px solid var(--accent); padding: 20px; margin-bottom: 15px; border-radius: 8px; transition: 0.3s; }
+        .practice-step.active { border-left-color: var(--success); background: var(--success-light); }
+        .practice-step-number { display: inline-block; width: 30px; height: 30px; background: var(--accent); color: white; border-radius: 50%; text-align: center; line-height: 30px; font-weight: 700; margin-right: 10px; }
+        .practice-step.active .practice-step-number { background: var(--success); }
+        .practice-timer { text-align: center; font-size: 2rem; font-weight: 700; color: var(--accent); margin: 20px 0; }
+        .practice-controls { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+        
+        .auth-container { max-width: 450px; margin: 60px auto; }
+        .auth-tabs { display: flex; gap: 10px; margin-bottom: 25px; }
+        .auth-tab { flex: 1; padding: 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; text-align: center; font-weight: 600; transition: 0.3s; }
+        .auth-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+        
+        .two-factor-section { background: var(--warning-light); border: 2px solid var(--warning); border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .two-factor-title { color: #92400e; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .two-factor-input { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        .two-factor-input input { width: 50px; text-align: center; font-size: 1.5rem; font-weight: 700; }
+        
+        .remember-me { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+        .remember-me input { width: auto; margin-bottom: 0; }
+        .remember-me label { margin-bottom: 0; cursor: pointer; }
+        
+        input, textarea, select { width: 100%; padding: 14px 18px; margin-bottom: 18px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; font-family: var(--font-body); transition: 0.3s; }
+        input:focus, textarea:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+        label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; color: var(--text-primary); }
+        .form-hint { font-size: 0.85rem; color: var(--text-secondary); margin-top: -12px; margin-bottom: 18px; }
+        
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 10000; }
+        .toast { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; animation: slideIn 0.3s ease; min-width: 300px; box-shadow: var(--shadow-lg); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.warning { border-left: 4px solid var(--warning); }
+        .toast.info { border-left: 4px solid var(--accent); }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        .payment-info { background: var(--success-light); border: 2px solid var(--success); border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .payment-split { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--success); }
+        .split-item { text-align: center; }
+        .split-percentage { font-size: 1.5rem; font-weight: 700; color: var(--success); }
+        .split-label { font-size: 0.85rem; color: var(--text-secondary); }
+        
+        .text-center { text-align: center; }
+        .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+        .mt-20 { margin-top: 20px; }
+        .mt-30 { margin-top: 30px; }
+        .flex { display: flex; }
+        .flex-between { justify-content: space-between; }
+        .flex-center { align-items: center; }
+        .gap-10 { gap: 10px; }
+        .gap-15 { gap: 15px; }
+        .hidden { display: none !important; }
+        .w-full { width: 100%; }
+        
+        .emergency-btn { position: fixed; bottom: 30px; right: 30px; background: var(--danger); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4); transition: 0.3s; z-index: 999; border: none; }
+        .emergency-btn:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(239, 68, 68, 0.6); }
+        
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 40px 20px; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; gap: 20px; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; }
+            .hero h1 { font-size: 2rem; }
+            .pricing-card.b2b { grid-column: span 1; }
+            .b2b-features { grid-template-columns: 1fr; }
+            .group-session-header { padding-right: 0; flex-direction: column; gap: 15px; }
+            .group-session-card::before { display: none; }
+            .calendar-grid { grid-template-columns: repeat(7, 1fr); }
+            .calendar-day { min-height: 60px; padding: 5px; }
+            .quick-actions { bottom: 100px; right: 20px; }
+            .chat-container { grid-template-columns: 1fr; }
+            .chat-list { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo" onclick="navigate('home')">
+                <div class="logo-icon"><i class="fas fa-heart"></i></div>
+                ЭХО
+                <span class="security-badge"><i class="fas fa-shield-alt"></i> Защищено</span>
+            </div>
+            <nav class="nav-menu" id="nav-menu">
+                <a class="nav-link active" onclick="navigate('home')">Главная</a>
+                <a class="nav-link" onclick="navigate('matching')">Подбор</a>
+                <a class="nav-link" onclick="navigate('practices')">Практики</a>
+                <a class="nav-link" onclick="navigate('experts')">Специалисты</a>
+                <a class="nav-link" onclick="navigate('premium')">Премиум</a>
+                <a class="nav-link" onclick="navigate('blog')">Блог</a>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Переключить тему">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="notification-bell" onclick="openNotifications()" title="Уведомления">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notification-count">3</span>
+                </button>
+                <div id="user-info" class="hidden">
+                    <span id="user-name" style="margin-right: 10px; font-weight: 500;"></span>
+                </div>
+                <button class="btn btn-outline btn-sm" id="auth-btn" onclick="openAuthModal()">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+                <button class="btn btn-success btn-sm" id="register-btn" onclick="openRegisterModal()">
+                    <i class="fas fa-user-plus"></i> Регистрация
+                </button>
+                <button class="btn btn-danger btn-sm hidden" id="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Выход
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <button class="quick-action-btn mood" onclick="openMoodTracker()" title="Трекер настроения">
+            <i class="fas fa-smile"></i>
+        </button>
+        <button class="quick-action-btn favorites" onclick="openFavorites()" title="Избранное">
+            <i class="fas fa-heart"></i>
+        </button>
+        <button class="quick-action-btn chat" onclick="openChatSupport()" title="Чат с экспертом">
+            <i class="fas fa-comments"></i>
+        </button>
+        <button class="quick-action-btn crisis" onclick="openCrisisHelp()" title="Экстренная помощь">
+            <i class="fas fa-life-ring"></i>
+        </button>
+    </div>
+
+    <main>
+        <!-- HOME PAGE -->
+        <div id="home" class="section active">
+            <div class="hero">
+                <div class="hero-badge">
+                    <i class="fas fa-shield-check"></i>
+                    Анонимно • Профессионально • Круглосуточно • Защищено
+                </div>
+                <h1>Здесь вам помогут. Вы не одни.</h1>
+                <p class="hero-subtitle">
+                    Профессиональная психологическая помощь онлайн с расширенной защитой данных.
+                    Индивидуальные и групповые сессии, практики самопомощи, корпоративные решения.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-lg btn-success" onclick="startMatching()">
+                        <i class="fas fa-magic"></i> Умный подбор специалиста
+                    </button>
+                    <button class="btn btn-lg" onclick="navigate('practices')">
+                        <i class="fas fa-brain"></i> Бесплатные практики
+                    </button>
+                    <button class="btn btn-lg btn-outline" onclick="openRegisterModal()">
+                        <i class="fas fa-user-plus"></i> Регистрация
+                    </button>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">150+</div>
+                        <div class="hero-stat-label">Проверенных экспертов</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">5000+</div>
+                        <div class="hero-stat-label">Проведённых сессий</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">4.9</div>
+                        <div class="hero-stat-label">Средний рейтинг</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">98%</div>
+                        <div class="hero-stat-label">Довольных клиентов</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Smart Matching Section -->
+            <div class="matching-section">
+                <h2><i class="fas fa-magic"></i> Умный подбор специалиста за 2 минуты</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin: 20px auto;">
+                    Ответьте на 5 вопросов и мы подберём идеального специалиста именно для вашей ситуации
+                </p>
+                <button class="btn btn-lg btn-success" onclick="startMatching()">
+                    <i class="fas fa-play"></i> Начать подбор
+                </button>
+                <div class="matching-steps">
+                    <div class="matching-step">
+                        <div class="matching-step-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="matching-step-title">1. Пройдите тест</div>
+                        <div class="matching-step-desc">5 простых вопросов о вашем запросе</div>
+                    </div>
+                    <div class="matching-step">
+                        <div class="matching-step-icon"><i class="fas fa-robot"></i></div>
+                        <div class="matching-step-title">2. AI-анализ</div>
+                        <div class="matching-step-desc">Алгоритм подберёт лучших экспертов</div>
+                    </div>
+                    <div class="matching-step">
+                        <div class="matching-step-icon"><i class="fas fa-user-md"></i></div>
+                        <div class="matching-step-title">3. Выберите</div>
+                        <div class="matching-step-desc">Ознакомьтесь с профилями и выберите</div>
+                    </div>
+                    <div class="matching-step">
+                        <div class="matching-step-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div class="matching-step-title">4. Запишитесь</div>
+                        <div class="matching-step-desc">Забронируйте удобное время сессии</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LEAD MAGNET -->
+            <div class="lead-magnet">
+                <h3>🎁 Бесплатная консультация</h3>
+                <p>Запишитесь на бесплатную 15-минутную консультацию с психологом. Поможем определить ваш запрос и подобрать специалиста.</p>
+                <button class="btn btn-lg btn-success" onclick="openFreeConsultationModal()">
+                    <i class="fas fa-gift"></i> Получить консультацию
+                </button>
+            </div>
+            
+            <!-- Premium Content Section -->
+            <div class="premium-section">
+                <h2><i class="fas fa-crown"></i> Премиум контент</h2>
+                <p style="opacity: 0.95;">Эксклюзивные материалы для участников премиум-программы</p>
+                <div class="premium-grid">
+                    <div class="premium-card">
+                        <div class="premium-card-icon">🎓</div>
+                        <div class="premium-card-title">Видео-курсы</div>
+                        <div class="premium-card-desc">30+ курсов от ведущих экспертов по работе с тревогой, депрессией, отношениями</div>
+                    </div>
+                    <div class="premium-card">
+                        <div class="premium-card-icon">🎧</div>
+                        <div class="premium-card-title">Аудио-медитации</div>
+                        <div class="premium-card-desc">50+ guided медитаций для сна, релаксации, работы со стрессом</div>
+                    </div>
+                    <div class="premium-card">
+                        <div class="premium-card-icon">📱</div>
+                        <div class="premium-card-title">Ранний доступ</div>
+                        <div class="premium-card-desc">Первыми тестируйте новые функции и получайте приоритетную поддержку</div>
+                    </div>
+                    <div class="premium-card">
+                        <div class="premium-card-icon">👤</div>
+                        <div class="premium-card-title">Персональный куратор</div>
+                        <div class="premium-card-desc">Индивидуальное сопровождение и помощь в достижении целей</div>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-outline" style="background: white; color: #f59e0b; margin-top: 30px;" onclick="navigate('premium')">
+                    <i class="fas fa-star"></i> Узнать больше о Премиум
+                </button>
+            </div>
+            
+            <!-- Mood Tracker -->
+            <div class="mood-tracker">
+                <div class="section-title">
+                    <h2><i class="fas fa-smile"></i> Как вы себя чувствуете сегодня?</h2>
+                    <p>Отслеживайте своё настроение и получайте персональные рекомендации</p>
+                </div>
+                <div class="mood-options">
+                    <div class="mood-option" onclick="selectMood('excellent')" title="Отлично">🤩</div>
+                    <div class="mood-option" onclick="selectMood('good')" title="Хорошо">😊</div>
+                    <div class="mood-option" onclick="selectMood('neutral')" title="Нормально">😐</div>
+                    <div class="mood-option" onclick="selectMood('bad')" title="Плохо">😔</div>
+                    <div class="mood-option" onclick="selectMood('terrible')" title="Ужасно">😢</div>
+                </div>
+                <div id="mood-recommendation" style="margin-top: 20px; padding: 20px; background: var(--bg-secondary); border-radius: 12px; display: none;"></div>
+            </div>
+            
+            <!-- Progress Dashboard -->
+            <div class="progress-dashboard" id="progress-dashboard" style="display: none;">
+                <div class="section-title">
+                    <h2><i class="fas fa-chart-line"></i> Ваш прогресс</h2>
+                    <p>Отслеживайте свои достижения на пути к ментальному здоровью</p>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="stat-sessions">0</div>
+                        <div class="progress-stat-label">Проведено сессий</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="stat-practices">0</div>
+                        <div class="progress-stat-label">Выполнено практик</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="stat-days">0</div>
+                        <div class="progress-stat-label">Дней в платформе</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-stat-value" id="stat-badges">0</div>
+                        <div class="progress-stat-label">Получено наград</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Packages -->
+            <div class="payment-packages">
+                <div class="section-title">
+                    <h2><i class="fas fa-gift"></i> Выгодные пакеты сессий</h2>
+                    <p>Покупайте пакеты и экономьте до 40%</p>
+                </div>
+                <div class="packages-grid">
+                    <div class="package-card">
+                        <div class="package-sessions">1</div>
+                        <div class="package-price">2500₽</div>
+                        <button class="btn btn-outline btn-block" onclick="buyPackage(1, 2500)">Купить</button>
+                    </div>
+                    <div class="package-card">
+                        <div class="package-sessions">5</div>
+                        <div class="package-price">
+                            <span class="package-old-price">12500₽</span>
+                            11250₽
+                        </div>
+                        <div class="package-save">Экономия 10%</div>
+                        <button class="btn btn-success btn-block" onclick="buyPackage(5, 11250)">Купить</button>
+                    </div>
+                    <div class="package-card best-value">
+                        <div class="package-sessions">10</div>
+                        <div class="package-price">
+                            <span class="package-old-price">25000₽</span>
+                            20000₽
+                        </div>
+                        <div class="package-save">Экономия 20% + 1 сессия в подарок</div>
+                        <button class="btn btn-success btn-block" onclick="buyPackage(10, 20000)">Купить</button>
+                    </div>
+                    <div class="package-card">
+                        <div class="package-sessions">20</div>
+                        <div class="package-price">
+                            <span class="package-old-price">50000₽</span>
+                            35000₽
+                        </div>
+                        <div class="package-save">Экономия 30%</div>
+                        <button class="btn btn-success btn-block" onclick="buyPackage(20, 35000)">Купить</button>
+                    </div>
+                </div>
+                
+                <!-- Gift Certificate -->
+                <div class="gift-certificate">
+                    <h3><i class="fas fa-gift"></i> Подарочный сертификат</h3>
+                    <p>Подарите заботу о ментальном здоровье близким</p>
+                    <div class="gift-amount">от 2500₽</div>
+                    <button class="btn btn-block" style="background: white; color: #f59e0b;" onclick="buyGiftCertificate()">
+                        <i class="fas fa-heart"></i> Купить сертификат
+                    </button>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div style="text-align: center; margin-top: 30px;">
+                    <p style="color: var(--text-secondary); margin-bottom: 15px;">Принимаем к оплате:</p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; font-size: 2rem; color: var(--text-secondary);">
+                        <i class="fab fa-cc-visa" title="Visa"></i>
+                        <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                        <i class="fab fa-apple-pay" title="Apple Pay"></i>
+                        <i class="fab fa-google-pay" title="Google Pay"></i>
+                        <i class="fas fa-qrcode" title="СБП"></i>
+                        <i class="fab fa-bitcoin" title="Bitcoin"></i>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 15px;">
+                        <i class="fas fa-shield-alt"></i> Все платежи защищены и зашифрованы
+                    </p>
+                </div>
+            </div>
+            
+            <!-- TESTIMONIALS -->
+            <div class="testimonials-section">
+                <div class="section-title">
+                    <h2><i class="fas fa-heart"></i> Отзывы наших клиентов</h2>
+                    <p>Истории людей, которые уже прошли путь к лучшему самочувствию</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "После 3 месяцев работы с психологом на ЭХО моя тревога уменьшилась на 80%. 
+                            Наконец-то могу спокойно спать и наслаждаться жизнью. Спасибо огромное!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">АК</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Анна К.</div>
+                                <div class="testimonial-date">2 недели назад</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Групповые сессии — это нечто! Поддержка людей, которые понимают тебя, 
+                            бесценна. Плюс цена намного доступнее индивидуальных встреч."
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">МП</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Михаил П.</div>
+                                <div class="testimonial-date">1 месяц назад</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="testimonial-text">
+                            "Корпоративный тариф спас нашу команду от выгорания. Сотрудники стали 
+                            продуктивнее и счастливее. Рекомендую всем HR-директорам!"
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">ЕС</div>
+                            <div class="testimonial-info">
+                                <div class="testimonial-name">Елена С.</div>
+                                <div class="testimonial-date">3 недели назад</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matching Page -->
+        <div id="matching" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-magic"></i> Умный подбор специалиста</h2>
+                <p>Ответьте на вопросы и мы подберём идеального эксперта</p>
+            </div>
+            <div class="card" style="max-width: 700px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px;">
+                <div id="matching-quiz">
+                    <div class="matching-progress" style="background: var(--bg-secondary); border-radius: 10px; height: 8px; margin-bottom: 30px;">
+                        <div id="matching-progress-bar" style="background: linear-gradient(90deg, var(--accent), var(--success)); height: 100%; border-radius: 10px; width: 0%; transition: width 0.3s;"></div>
+                    </div>
+                    <div id="matching-question"></div>
+                    <div id="matching-options" style="display: grid; gap: 15px; margin-top: 25px;"></div>
+                </div>
+                <div id="matching-results" class="hidden" style="text-align: center; padding: 40px;">
+                    <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success); margin-bottom: 20px;"></i>
+                    <h3>Мы подобрали для вас экспертов!</h3>
+                    <p style="color: var(--text-secondary); margin: 20px 0;">На основе ваших ответов мы нашли специалистов, которые лучше всего подходят для вашей ситуации</p>
+                    <button class="btn btn-lg btn-success" onclick="navigate('experts')">
+                        <i class="fas fa-search"></i> Посмотреть специалистов
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Page -->
+        <div id="premium" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-crown"></i> Премиум подписка</h2>
+                <p>Эксклюзивный контент и привилегии для тех, кто ценит заботу о себе</p>
+            </div>
+            
+            <div class="premium-section" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);">
+                <h2 style="color: white;"><i class="fas fa-star"></i> Премиум</h2>
+                <p style="opacity: 0.95;">990₽/месяц</p>
+                <ul style="list-style: none; text-align: left; max-width: 500px; margin: 30px auto; color: white;">
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Все видео-курсы (30+)</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Аудио-медитации (50+)</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> 1 индивидуальная сессия в месяц</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Приоритетная поддержка 24/7</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Ранний доступ к новым функциям</li>
+                </ul>
+                <button class="btn btn-lg" style="background: white; color: var(--accent);" onclick="buyPremium()">
+                    <i class="fas fa-heart"></i> Оформить подписку
+                </button>
+            </div>
+            
+            <div class="premium-section" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); margin-top: 40px;">
+                <h2 style="color: white;"><i class="fas fa-gem"></i> Премиум Плюс</h2>
+                <p style="opacity: 0.95;">2490₽/месяц</p>
+                <ul style="list-style: none; text-align: left; max-width: 500px; margin: 30px auto; color: white;">
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Всё из Премиум</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> 4 сессии в месяц</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Персональный куратор</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Чат с психологом 24/7</li>
+                    <li style="padding: 10px 0;"><i class="fas fa-check" style="margin-right: 10px;"></i> Офлайн-мероприятия</li>
+                </ul>
+                <button class="btn btn-lg" style="background: white; color: #f59e0b;" onclick="buyPremiumPlus()">
+                    <i class="fas fa-crown"></i> Оформить подписку
+                </button>
+            </div>
+        </div>
+
+        <!-- Practices Page -->
+        <div id="practices" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-brain"></i> Практики самопомощи</h2>
+                <p>Бесплатные техники для работы с ментальным здоровьем</p>
+            </div>
+            <div class="practices-grid">
+                <div class="practice-card">
+                    <div class="practice-icon"><i class="fas fa-spa"></i></div>
+                    <h3 class="practice-title">Медитация осознанности</h3>
+                    <p class="practice-desc">Научитесь управлять вниманием и снижать уровень тревоги через практику осознанности.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('meditation')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon" style="background: var(--success-light); color: var(--success);"><i class="fas fa-wind"></i></div>
+                    <h3 class="practice-title">Дыхательные техники</h3>
+                    <p class="practice-desc">Эффективные упражнения для быстрого снятия стресса и панических атак.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('breathing')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon" style="background: var(--warning-light); color: var(--warning);"><i class="fas fa-pen-fancy"></i></div>
+                    <h3 class="practice-title">Дневник эмоций</h3>
+                    <p class="practice-desc">Практика ведения дневника для понимания своих эмоций и триггеров.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('journaling')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon" style="background: var(--danger-light); color: var(--danger);"><i class="fas fa-anchor"></i></div>
+                    <h3 class="practice-title">Техники заземления</h3>
+                    <p class="practice-desc">Методы возвращения в «здесь и сейчас» при тревоге и панических атаках.</p>
+                    <button class="btn btn-block btn-success" onclick="startPractice('grounding')">
+                        <i class="fas fa-play"></i> Начать практику
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experts Page -->
+        <div id="experts" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-user-md"></i> Наши специалисты</h2>
+                <p>Проверенные психологи с опытом работы и подтверждённой квалификацией</p>
+            </div>
+            <div class="experts-grid" id="experts-list"></div>
+        </div>
+
+        <!-- Blog Page -->
+        <div id="blog" class="section">
+            <div class="section-title">
+                <h2><i class="fas fa-newspaper"></i> Блог о ментальном здоровье</h2>
+                <p>Полезные статьи, советы экспертов и истории выздоровления</p>
+            </div>
+            <div class="blog-grid" id="blog-list"></div>
+        </div>
+
+        <!-- Homework Page -->
+        <div id="homework" class="section">
+            <div class="homework-section">
+                <div class="section-title">
+                    <h2><i class="fas fa-tasks"></i> Домашние задания</h2>
+                    <p>Выполняйте задания от вашего эксперта для лучшего результата</p>
+                </div>
+                <div class="homework-list" id="homework-list"></div>
+            </div>
+        </div>
+
+        <!-- Chat Page -->
+        <div id="chat" class="section">
+            <div class="chat-section">
+                <div class="section-title">
+                    <h2><i class="fas fa-comments"></i> Чат с экспертом</h2>
+                    <p>Задавайте вопросы между сессиями (доступно в Премиум)</p>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-list" id="chat-list"></div>
+                    <div class="chat-messages">
+                        <div class="messages-box" id="messages-box"></div>
+                        <div class="message-input-container">
+                            <input type="text" id="message-input" placeholder="Напишите сообщение..." style="margin-bottom: 0;">
+                            <button class="btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Controls Page -->
+        <div id="privacy" class="section">
+            <div class="privacy-controls">
+                <div class="section-title">
+                    <h2><i class="fas fa-shield-alt"></i> Защита данных</h2>
+                    <p>Управляйте настройками конфиденциальности</p>
+                </div>
+                
+                <div class="privacy-option">
+                    <div class="privacy-option-info">
+                        <div class="privacy-option-title">Двухфакторная аутентификация</div>
+                        <div class="privacy-option-desc">Дополнительная защита вашего аккаунта</div>
+                    </div>
+                    <div class="toggle-switch" onclick="toggleTwoFactor(this)"></div>
+                </div>
+                
+                <div class="privacy-option">
+                    <div class="privacy-option-info">
+                        <div class="privacy-option-title">Шифрование сессий</div>
+                        <div class="privacy-option-desc">End-to-end шифрование всех видеовстреч</div>
+                    </div>
+                    <div class="toggle-switch active" onclick="toggleEncryption(this)"></div>
+                </div>
+                
+                <div class="privacy-option">
+                    <div class="privacy-option-info">
+                        <div class="privacy-option-title">Анонимный профиль</div>
+                        <div class="privacy-option-desc">Скрыть ваше имя от других пользователей</div>
+                    </div>
+                    <div class="toggle-switch" onclick="toggleAnonymous(this)"></div>
+                </div>
+                
+                <div class="privacy-option">
+                    <div class="privacy-option-info">
+                        <div class="privacy-option-title">Автоматическое удаление данных</div>
+                        <div class="privacy-option-desc">Удалить все данные через 90 дней неактивности</div>
+                    </div>
+                    <div class="toggle-switch" onclick="toggleAutoDelete(this)"></div>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: center;">
+                    <button class="btn btn-danger" onclick="deleteAllData()">
+                        <i class="fas fa-trash"></i> Удалить все мои данные
+                    </button>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 15px;">
+                        <i class="fas fa-info-circle"></i> Это действие необратимо
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button class="emergency-btn" onclick="openEmergencyModal()">
+        <i class="fas fa-phone"></i>
+    </button>
+
+    <footer>
+        <p>© 2024 ЭХО PRO | Платформа психологической помощи</p>
+        <p style="margin-top: 10px;">📞 8-800-2000-122 | 📧 support@echo-mental.ru</p>
+        <p style="margin-top: 10px; font-size: 0.85rem;">
+            <a href="#" style="color: var(--accent);">Оферта</a> | 
+            <a href="#" style="color: var(--accent);">Конфиденциальность</a> | 
+            <a href="#" style="color: var(--accent);">Политика cookies</a>
+        </p>
+    </footer>
+
+    <!-- Practice Modal -->
+    <div id="practice-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 id="practice-modal-title"><i class="fas fa-spa"></i> Медитация осознанности</h3>
+                <button class="modal-close" onclick="closeModal('practice-modal')">&times;</button>
+            </div>
+            <p id="practice-modal-desc" style="color: var(--text-secondary); margin-bottom: 20px;"></p>
+            <div class="practice-timer" id="practice-timer">15:00</div>
+            <div class="practice-steps" id="practice-steps"></div>
+            <div class="practice-controls">
+                <button class="btn btn-outline" onclick="previousStep()"><i class="fas fa-chevron-left"></i> Назад</button>
+                <button class="btn btn-success" id="practice-start-btn" onclick="togglePractice()">
+                    <i class="fas fa-play"></i> Начать
+                </button>
+                <button class="btn btn-outline" onclick="nextStep()">Вперёд <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-circle"></i> Вход в систему</h3>
+                <button class="modal-close" onclick="closeModal('auth-modal')">&times;</button>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchModalAuthTab('client')">
+                    <i class="fas fa-user"></i> Клиент
+                </div>
+                <div class="auth-tab" onclick="switchModalAuthTab('expert')">
+                    <i class="fas fa-user-md"></i> Специалист
+                </div>
+            </div>
+            
+            <div id="modal-client-auth-form">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="modal-client-email" placeholder="test@test.ru">
+                <label><i class="fas fa-lock"></i> Пароль</label>
+                <input type="password" id="modal-client-password" placeholder="test123">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember-me" checked>
+                    <label for="remember-me">Запомнить меня (не нужно входить каждый раз)</label>
+                </div>
+                <button class="btn btn-block btn-lg" onclick="modalClientAuth()">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+                <p class="text-center mt-20" style="color: var(--text-secondary);">
+                    Нет аккаунта? <a href="#" onclick="closeModal('auth-modal'); openRegisterModal();" style="color: var(--accent);">Зарегистрироваться</a>
+                </p>
+            </div>
+            
+            <div id="modal-expert-auth-form" class="hidden">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="modal-expert-email" placeholder="igor.ylitka1992@mail.ru">
+                <label><i class="fas fa-lock"></i> Пароль</label>
+                <input type="password" id="modal-expert-password" placeholder="alla123">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember-me-expert" checked>
+                    <label for="remember-me-expert">Запомнить меня (не нужно входить каждый раз)</label>
+                </div>
+                <button class="btn btn-block btn-lg" style="background: var(--accent);" onclick="modalExpertAuth()">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+                <div class="payment-info mt-20">
+                    <strong>📝 Вход для специалиста:</strong><br>
+                    Email: <code>igor.ylitka1992@mail.ru</code><br>
+                    Пароль: <code>alla123</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Регистрация</h3>
+                <button class="modal-close" onclick="closeModal('register-modal')">&times;</button>
+            </div>
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchRegisterTab('client')">
+                    <i class="fas fa-user"></i> Клиент
+                </div>
+                <div class="auth-tab" onclick="switchRegisterTab('expert')">
+                    <i class="fas fa-user-md"></i> Специалист
+                </div>
+            </div>
+            
+            <div id="register-client-form">
+                <label><i class="fas fa-user"></i> Имя</label>
+                <input type="text" id="reg-name" placeholder="Ваше имя">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="reg-email" placeholder="email@example.com">
+                <label><i class="fas fa-lock"></i> Пароль</label>
+                <input type="password" id="reg-password" placeholder="Минимум 6 символов">
+                <p class="form-hint">Пароль должен содержать минимум 6 символов</p>
+                <button class="btn btn-block btn-lg btn-success" onclick="registerClient()">
+                    <i class="fas fa-check"></i> Зарегистрироваться
+                </button>
+                <p class="text-center mt-20" style="color: var(--text-secondary);">
+                    Уже есть аккаунт? <a href="#" onclick="closeModal('register-modal'); openAuthModal();" style="color: var(--accent);">Войти</a>
+                </p>
+            </div>
+            
+            <div id="register-expert-form" class="hidden">
+                <label><i class="fas fa-user"></i> Имя</label>
+                <input type="text" id="expert-reg-firstname" placeholder="Имя">
+                <label><i class="fas fa-user"></i> Фамилия</label>
+                <input type="text" id="expert-reg-lastname" placeholder="Фамилия">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="expert-reg-email" placeholder="email@example.com">
+                <label><i class="fas fa-briefcase"></i> Специальность</label>
+                <input type="text" id="expert-reg-specialty" placeholder="Например: Клинический психолог">
+                <label><i class="fas fa-graduation-cap"></i> Метод терапии</label>
+                <select id="expert-reg-method">
+                    <option value="КПТ">КПТ</option>
+                    <option value="Гештальт">Гештальт</option>
+                    <option value="Психоанализ">Психоанализ</option>
+                    <option value="EMDR">EMDR</option>
+                </select>
+                <label><i class="fas fa-clock"></i> Опыт работы (лет)</label>
+                <input type="number" id="expert-reg-experience" placeholder="5">
+                <label><i class="fas fa-ruble-sign"></i> Стоимость сессии (₽)</label>
+                <input type="number" id="expert-reg-price" placeholder="2500">
+                <label><i class="fas fa-comment"></i> О себе</label>
+                <textarea id="expert-reg-about" placeholder="Расскажите о вашем подходе..." rows="3"></textarea>
+                <button class="btn btn-block btn-lg" style="background: var(--accent);" onclick="submitExpertApplication()">
+                    <i class="fas fa-paper-plane"></i> Отправить заявку
+                </button>
+                <p class="text-center mt-20" style="color: var(--text-secondary);">
+                    Заявка будет проверена в течение 1-3 дней
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Free Consultation Modal -->
+    <div id="free-consultation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-gift"></i> Бесплатная консультация</h3>
+                <button class="modal-close" onclick="closeModal('free-consultation-modal')">&times;</button>
+            </div>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                Оставьте заявку и мы свяжемся с вами в течение 24 часов для записи на бесплатную 15-минутную консультацию.
+            </p>
+            <label><i class="fas fa-user"></i> Ваше имя</label>
+            <input type="text" id="consult-name" placeholder="Как к вам обращаться">
+            <label><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="consult-email" placeholder="email@example.com">
+            <label><i class="fas fa-phone"></i> Телефон</label>
+            <input type="tel" id="consult-phone" placeholder="+7 (___) ___-__-__">
+            <label><i class="fas fa-comment"></i> Ваш запрос (необязательно)</label>
+            <textarea id="consult-message" placeholder="Кратко опишите, с чем хотели бы поработать..." rows="3"></textarea>
+            <button class="btn btn-block btn-lg btn-success" onclick="submitFreeConsultation()">
+                <i class="fas fa-paper-plane"></i> Отправить заявку
+            </button>
+            <p style="margin-top: 15px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+                <i class="fas fa-lock"></i> Ваши данные защищены и не будут переданы третьим лицам
+            </p>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergency-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color: var(--danger);"><i class="fas fa-phone"></i> Экстренная помощь</h3>
+                <button class="modal-close" onclick="closeModal('emergency-modal')">&times;</button>
+            </div>
+            <div style="text-align: center;">
+                <p style="margin-bottom: 25px;">Телефоны помощи:</p>
+                <div style="background: var(--danger-light); border: 2px solid var(--danger); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                    <p style="font-size: 1.5rem; font-weight: 700; color: var(--danger);">8-800-2000-122</p>
+                    <p>Детский телефон доверия</p>
+                </div>
+                <div style="background: var(--danger-light); border: 2px solid var(--danger); border-radius: 12px; padding: 25px;">
+                    <p style="font-size: 1.5rem; font-weight: 700; color: var(--danger);">112</p>
+                    <p>Экстренная помощь</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Modal -->
+    <div id="notifications-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-bell"></i> Уведомления</h3>
+                <button class="modal-close" onclick="closeModal('notifications-modal')">&times;</button>
+            </div>
+            <div id="notifications-list">
+                <div style="padding: 15px; border-bottom: 1px solid var(--border);">
+                    <strong>Новая статья в блоге</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 5px;">Анна Смирнова опубликовала новую статью о борьбе с тревогой</p>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">2 часа назад</p>
+                </div>
+                <div style="padding: 15px; border-bottom: 1px solid var(--border);">
+                    <strong>Напоминание о сессии</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 5px;">Завтра в 15:00 у вас сессия с Игорем Петровым</p>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">Сегодня</p>
+                </div>
+                <div style="padding: 15px;">
+                    <strong>Достижение разблокировано!</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 5px;">Вы выполнили 5 практик! Получена награда "Начинающий"</p>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">Вчера</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+        // DATABASE
+        const DB = {
+            experts: [
+                {
+                    id: '1',
+                    firstname: 'Анна',
+                    lastname: 'Смирнова',
+                    photo: null,
+                    specialty: 'Клинический психолог',
+                    worksWith: ['Тревога', 'Депрессия', 'Панические атаки'],
+                    methods: ['КПТ', 'Гештальт'],
+                    experience: 10,
+                    sessionPrice: 2500,
+                    rating: 5.0,
+                    reviewsCount: 120,
+                    verified: true,
+                    status: 'active',
+                    email: 'anna@echo.ru',
+                    password: 'anna123'
+                },
+                {
+                    id: '2',
+                    firstname: 'Игорь',
+                    lastname: 'Петров',
+                    photo: null,
+                    specialty: 'Психотерапевт',
+                    worksWith: ['Депрессия', 'Стресс', 'Выгорание'],
+                    methods: ['КПТ', 'EMDR'],
+                    experience: 7,
+                    sessionPrice: 3000,
+                    rating: 4.8,
+                    reviewsCount: 95,
+                    verified: true,
+                    status: 'active',
+                    email: 'igor@echo.ru',
+                    password: 'igor123'
+                },
+                {
+                    id: '3',
+                    firstname: 'Алла',
+                    lastname: 'Марданашвили',
+                    patronymic: 'Владимировна',
+                    photo: null,
+                    specialty: 'Клинический психолог, КПТ-терапевт',
+                    worksWith: ['Тревожные расстройства', 'Депрессия', 'Панические атаки'],
+                    methods: ['КПТ', 'МАК', 'Мультимодальная терапия'],
+                    experience: 7,
+                    sessionPrice: 2000,
+                    rating: 4.9,
+                    reviewsCount: 12,
+                    verified: true,
+                    status: 'active',
+                    email: 'igor.ylitka1992@mail.ru',
+                    password: 'alla123'
+                }
+            ],
+            users: [],
+            sessions: [],
+            homework: [],
+            chatMessages: [],
+            moodHistory: [],
+            notifications: [
+                { id: '1', title: 'Новая статья в блоге', message: 'Анна Смирнова опубликовала новую статью о борьбе с тревогой', time: '2 часа назад', read: false },
+                { id: '2', title: 'Напоминание о сессии', message: 'Завтра в 15:00 у вас сессия с Игорем Петровым', time: 'Сегодня', read: false },
+                { id: '3', title: 'Достижение разблокировано!', message: 'Вы выполнили 5 практик! Получена награда "Начинающий"', time: 'Вчера', read: false }
+            ],
+            crisisKeywords: ['суицид', 'смерть', 'убить', 'больно', 'не хочу жить', 'конец', 'устал'],
+            pricing: 'free'
+        };
+
+        // Matching Questions
+        const matchingQuestions = [
+            {
+                question: 'Что вас беспокоит больше всего?',
+                options: [
+                    { text: 'Тревога, страхи, паника', value: 'anxiety' },
+                    { text: 'Плохое настроение, апатия', value: 'depression' },
+                    { text: 'Проблемы в отношениях', value: 'relationships' },
+                    { text: 'Стресс, выгорание', value: 'stress' }
+                ]
+            },
+            {
+                question: 'Какой формат работы вам ближе?',
+                options: [
+                    { text: 'Структурированный, с заданиями', value: 'cbt' },
+                    { text: 'Глубокий, с фокусом на чувства', value: 'gestalt' },
+                    { text: 'Аналитический', value: 'psychoanalysis' }
+                ]
+            },
+            {
+                question: 'Как часто готовы встречаться?',
+                options: [
+                    { text: 'Раз в неделю', value: 'weekly' },
+                    { text: '2-3 раза в неделю', value: 'often' },
+                    { text: 'По необходимости', value: 'flexible' }
+                ]
+            },
+            {
+                question: 'Ваш бюджет на сессию?',
+                options: [
+                    { text: 'До 2000₽', value: '0-2000' },
+                    { text: '2000-3000₽', value: '2000-3000' },
+                    { text: 'От 3000₽', value: '3000+' }
+                ]
+            },
+            {
+                question: 'Предпочитаемый пол специалиста?',
+                options: [
+                    { text: 'Не важно', value: 'any' },
+                    { text: 'Женский', value: 'female' },
+                    { text: 'Мужской', value: 'male' }
+                ]
+            }
+        ];
+
+        // Practice Content
+        const practices = {
+            meditation: {
+                title: 'Медитация осознанности',
+                desc: 'Научитесь управлять вниманием и снижать уровень тревоги через практику осознанности.',
+                duration: 15,
+                steps: [
+                    'Найдите тихое место, где вас не побеспокоят',
+                    'Сядьте удобно с прямой спиной',
+                    'Закройте глаза и сделайте 3 глубоких вдоха',
+                    'Наблюдайте за своим дыханием, не контролируя его',
+                    'Когда мысли приходят, просто отмечайте их и возвращайтесь к дыханию',
+                    'Продолжайте 15 минут',
+                    'Медленно откройте глаза и поблагодарите себя за практику'
+                ]
+            },
+            breathing: {
+                title: 'Дыхательные техники',
+                desc: 'Эффективные упражнения для быстрого снятия стресса и панических атак.',
+                duration: 10,
+                steps: [
+                    'Сядьте или лягте удобно',
+                    'Вдохните через нос на 4 счёта',
+                    'Задержите дыхание на 4 счёта',
+                    'Выдохните через рот на 6 счетов',
+                    'Повторите 10 раз',
+                    'Обратите внимание на изменения в состоянии',
+                    'Поблагодарите себя за заботу о себе'
+                ]
+            },
+            journaling: {
+                title: 'Дневник эмоций',
+                desc: 'Практика ведения дневника для понимания своих эмоций и триггеров.',
+                duration: 20,
+                steps: [
+                    'Возьмите тетрадь или откройте документ',
+                    'Напишите текущую дату и время',
+                    'Опишите, что вы чувствуете прямо сейчас',
+                    'Что произошло сегодня?',
+                    'Какие мысли приходят?',
+                    'Что вы можете сделать для себя?',
+                    'Завершите записью благодарности'
+                ]
+            },
+            grounding: {
+                title: 'Техники заземления',
+                desc: 'Методы возвращения в «здесь и сейчас» при тревоге и панических атаках.',
+                duration: 5,
+                steps: [
+                    'Назовите 5 вещей, которые вы видите',
+                    'Назовите 4 вещи, которые вы можете потрогать',
+                    'Назовите 3 звука, которые вы слышите',
+                    'Назовите 2 запаха, которые вы чувствуете',
+                    'Назовите 1 вещь, которую вы можете попробовать на вкус',
+                    'Сделайте глубокий вдох и выдох',
+                    'Почувствуйте связь с настоящим моментом'
+                ]
+            }
+        };
+
+        // Mood Recommendations
+        const moodRecommendations = {
+            excellent: { text: 'Отлично! Продолжайте заботиться о себе! 🌟', practice: 'meditation' },
+            good: { text: 'Хорошее настроение! Попробуйте практику благодарности! 😊', practice: 'journaling' },
+            neutral: { text: 'Нормальное состояние. Медитация поможет найти баланс! 😐', practice: 'meditation' },
+            bad: { text: 'Понимаем, что вам непросто. Дыхательные техники помогут! 😔', practice: 'breathing' },
+            terrible: { text: 'Мы рядом с вами. Рекомендуем обратиться к специалисту! 😢', practice: 'grounding' }
+        };
+
+        let currentUser = null;
+        let currentRole = null;
+        let selectedExpert = null;
+        let currentMonth = new Date();
+        let currentPractice = null;
+        let practiceStep = 0;
+        let practiceTimer = null;
+        let practiceRunning = false;
+        let matchingStep = 0;
+        let matchingAnswers = [];
+        let userStats = { sessions: 0, practices: 0, days: 0, badges: 0 };
+        let activeChat = null;
+
+        // INITIALIZATION
+        window.addEventListener('load', function() {
+            initDB();
+            checkRememberMe();
+            checkSession();
+            loadExperts();
+            loadBlogPosts();
+            loadTheme();
+            loadHomework();
+            loadChat();
+            updateNotificationCount();
+        });
+
+        function initDB() {
+            const savedUsers = localStorage.getItem('echo_users');
+            const savedSessions = localStorage.getItem('echo_sessions');
+            const savedStats = localStorage.getItem('echo_user_stats');
+            const savedMood = localStorage.getItem('echo_mood_history');
+            
+            if(savedUsers) {
+                DB.users = JSON.parse(savedUsers);
+            } else {
+                DB.users = [
+                    {id: 'test1', name: 'Тестовый клиент', email: 'test@test.ru', password: 'test123', role: 'client'}
+                ];
+                localStorage.setItem('echo_users', JSON.stringify(DB.users));
+            }
+            
+            if(savedSessions) {
+                DB.sessions = JSON.parse(savedSessions);
+            }
+            
+            if(savedStats && currentUser) {
+                userStats = JSON.parse(savedStats);
+            }
+            
+            if(savedMood) {
+                DB.moodHistory = JSON.parse(savedMood);
+            }
+        }
+
+        function saveDB() {
+            localStorage.setItem('echo_users', JSON.stringify(DB.users));
+            localStorage.setItem('echo_sessions', JSON.stringify(DB.sessions));
+            localStorage.setItem('echo_user_stats', JSON.stringify(userStats));
+            localStorage.setItem('echo_mood_history', JSON.stringify(DB.moodHistory));
+            localStorage.setItem('echo_pricing', DB.pricing);
+            localStorage.setItem('echo_notifications', JSON.stringify(DB.notifications));
+        }
+
+        // CRISIS DETECTION
+        function checkCrisisWords(text) {
+            const lowerText = text.toLowerCase();
+            const found = DB.crisisKeywords.filter(word => lowerText.includes(word));
+            
+            if(found.length > 0) {
+                showCrisisAlert();
+                return true;
+            }
+            return false;
+        }
+
+        function showCrisisAlert() {
+            const alertHTML = `
+                <div class="crisis-alert">
+                    <div class="crisis-alert-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Мы видим, что вам тяжело
+                    </div>
+                    <p>Если вы испытываете острую боль или у вас есть мысли о самоповреждении, пожалуйста, обратитесь за помощью:</p>
+                    <div class="crisis-alert-buttons">
+                        <button class="btn btn-danger" onclick="openEmergencyModal()">
+                            <i class="fas fa-phone"></i> Телефон доверия
+                        </button>
+                        <button class="btn btn-success" onclick="connectToExpert()">
+                            <i class="fas fa-user-md"></i> Связаться с экспертом
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            const container = document.querySelector('main');
+            container.insertAdjacentHTML('afterbegin', alertHTML);
+            
+            showToast('Мы рядом. Вы не одни.', 'warning');
+        }
+
+        function connectToExpert() {
+            showToast('Соединяем с дежурным экспертом...', 'info');
+            setTimeout(() => {
+                showToast('Эксперт скоро подключится', 'success');
+            }, 2000);
+        }
+
+        // TWO-FACTOR AUTH
+        function toggleTwoFactor(element) {
+            element.classList.toggle('active');
+            if(element.classList.contains('active')) {
+                showTwoFactorSetup();
+                showToast('2FA включена', 'success');
+            } else {
+                showToast('2FA выключена', 'info');
+            }
+        }
+
+        function showTwoFactorSetup() {
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.id = '2fa-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-shield-alt"></i> Настройка 2FA</h3>
+                        <button class="modal-close" onclick="closeModal('2fa-modal')">&times;</button>
+                    </div>
+                    <p>Введите код из приложения-аутентификатора:</p>
+                    <div class="two-factor-input">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                        <input type="text" maxlength="1" pattern="[0-9]">
+                    </div>
+                    <button class="btn btn-block btn-success" onclick="verifyTwoFactor()">
+                        <i class="fas fa-check"></i> Подтвердить
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function verifyTwoFactor() {
+            closeModal('2fa-modal');
+            showToast('2FA успешно настроена!', 'success');
+        }
+
+        function toggleEncryption(element) {
+            element.classList.toggle('active');
+            showToast(element.classList.contains('active') ? 'Шифрование включено' : 'Шифрование выключено', 'info');
+        }
+
+        function toggleAnonymous(element) {
+            element.classList.toggle('active');
+            showToast(element.classList.contains('active') ? 'Анонимный режим включён' : 'Анонимный режим выключен', 'info');
+        }
+
+        function toggleAutoDelete(element) {
+            element.classList.toggle('active');
+            showToast(element.classList.contains('active') ? 'Автоудаление включено' : 'Автоудаление выключено', 'info');
+        }
+
+        function deleteAllData() {
+            if(confirm('Вы уверены? Это действие необратимо!')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        // SMART MATCHING
+        function startMatching() {
+            navigate('matching');
+            matchingStep = 0;
+            matchingAnswers = [];
+            showMatchingQuestion();
+        }
+
+        function showMatchingQuestion() {
+            const progress = ((matchingStep) / matchingQuestions.length) * 100;
+            document.getElementById('matching-progress-bar').style.width = progress + '%';
+            
+            if(matchingStep >= matchingQuestions.length) {
+                showMatchingResults();
+                return;
+            }
+            
+            const q = matchingQuestions[matchingStep];
+            document.getElementById('matching-question').innerHTML = `
+                <h3 style="margin-bottom: 20px;">${matchingStep + 1}. ${q.question}</h3>
+            `;
+            
+            const optionsHTML = q.options.map((opt, i) => `
+                <button class="btn btn-outline btn-block" onclick="selectMatchingOption('${opt.value}')" style="text-align: left; justify-content: flex-start;">
+                    ${opt.text}
+                </button>
+            `).join('');
+            
+            document.getElementById('matching-options').innerHTML = optionsHTML;
+        }
+
+        function selectMatchingOption(value) {
+            matchingAnswers.push(value);
+            matchingStep++;
+            showMatchingQuestion();
+        }
+
+        function showMatchingResults() {
+            document.getElementById('matching-quiz').classList.add('hidden');
+            document.getElementById('matching-results').classList.remove('hidden');
+            document.getElementById('matching-progress-bar').style.width = '100%';
+        }
+
+        // HOMEWORK
+        function loadHomework() {
+            const homeworkList = document.getElementById('homework-list');
+            if(!homeworkList) return;
+            
+            const homework = [
+                { id: '1', title: 'Ведите дневник эмоций 7 дней', due: 'Завтра', completed: false },
+                { id: '2', title: 'Практика дыхания 4-7-8', due: 'Сегодня', completed: true },
+                { id: '3', title: 'Список благодарностей (10 пунктов)', due: '3 дня', completed: false }
+            ];
+            
+            homeworkList.innerHTML = homework.map(hw => `
+                <div class="homework-item ${hw.completed ? 'completed' : ''}">
+                    <div class="homework-info">
+                        <div class="homework-title">${hw.completed ? '<i class="fas fa-check-circle" style="color: var(--success);"></i> ' : ''}${hw.title}</div>
+                        <div class="homework-due"><i class="fas fa-clock"></i> Срок: ${hw.due}</div>
+                    </div>
+                    <div class="homework-actions">
+                        ${!hw.completed ? `<button class="btn btn-success btn-sm" onclick="completeHomework('${hw.id}')"><i class="fas fa-check"></i></button>` : ''}
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function completeHomework(id) {
+            showToast('Задание выполнено! +10 очков', 'success');
+            loadHomework();
+        }
+
+        // CHAT
+        function loadChat() {
+            const chatList = document.getElementById('chat-list');
+            if(!chatList) return;
+            
+            const chats = [
+                { id: '1', name: 'Анна Смирнова', lastMessage: 'Как вы себя чувствуете?', time: '10:30' },
+                { id: '2', name: 'Игорь Петров', lastMessage: 'До встречи завтра!', time: 'Вчера' }
+            ];
+            
+            chatList.innerHTML = chats.map(chat => `
+                <div class="chat-item" onclick="openChat('${chat.id}')">
+                    <div style="font-weight: 600;">${chat.name}</div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">${chat.lastMessage}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-align: right;">${chat.time}</div>
+                </div>
+            `).join('');
+        }
+
+        function openChat(id) {
+            document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.chat-item').classList.add('active');
+            activeChat = id;
+            
+            const messagesBox = document.getElementById('messages-box');
+            messagesBox.innerHTML = `
+                <div class="message received">Здравствуйте! Как вы себя чувствуете сегодня?</div>
+                <div class="message sent">Привет! Лучше, спасибо за заботу</div>
+                <div class="message received">Отлично! Продолжаем работу</div>
+            `;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const text = input.value.trim();
+            if(!text) return;
+            
+            if(checkCrisisWords(text)) {
+                input.value = '';
+                return;
+            }
+            
+            const messagesBox = document.getElementById('messages-box');
+            messagesBox.innerHTML += `<div class="message sent">${text}</div>`;
+            messagesBox.scrollTop = messagesBox.scrollHeight;
+            input.value = '';
+            
+            setTimeout(() => {
+                messagesBox.innerHTML += `<div class="message received">Спасибо, что поделились!</div>`;
+                messagesBox.scrollTop = messagesBox.scrollHeight;
+            }, 1000);
+        }
+
+        // MOOD TRACKER
+        function selectMood(mood) {
+            document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            const rec = moodRecommendations[mood];
+            const recDiv = document.getElementById('mood-recommendation');
+            recDiv.style.display = 'block';
+            recDiv.innerHTML = `<strong>Рекомендация:</strong><p>${rec.text}</p><button class="btn btn-success mt-20" onclick="startPractice('${rec.practice}')"><i class="fas fa-play"></i> Начать практику</button>`;
+            
+            DB.moodHistory.push({ mood: mood, date: new Date().toISOString() });
+            saveDB();
+            
+            showToast('Настроение сохранено!', 'success');
+        }
+
+        // NOTIFICATIONS
+        function updateNotificationCount() {
+            const unread = DB.notifications.filter(n => !n.read).length;
+            document.getElementById('notification-count').innerText = unread;
+        }
+
+        function openNotifications() {
+            document.getElementById('notifications-modal').classList.add('show');
+            document.getElementById('notifications-modal').style.display = 'flex';
+            
+            DB.notifications.forEach(n => n.read = true);
+            saveDB();
+            updateNotificationCount();
+        }
+
+        // THEME TOGGLE
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('echo_theme', newTheme);
+            
+            const icon = document.querySelector('.theme-toggle i');
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            
+            showToast(`Тема: ${newTheme === 'dark' ? 'Тёмная' : 'Светлая'}`, 'info');
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('echo_theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            const icon = document.querySelector('.theme-toggle i');
+            icon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // REMEMBER ME
+        function checkRememberMe() {
+            const savedUser = localStorage.getItem('echo_remember_user');
+            if(savedUser) {
+                const user = JSON.parse(savedUser);
+                loginUser(user);
+                showToast('С возвращением! Вы автоматически вошли.', 'success');
+            }
+        }
+
+        function saveRememberMe(user) {
+            localStorage.setItem('echo_remember_user', JSON.stringify(user));
+        }
+
+        function clearRememberMe() {
+            localStorage.removeItem('echo_remember_user');
+        }
+
+        // SESSION CHECK
+        function checkSession() {
+            const saved = localStorage.getItem('echo_current_user');
+            if(saved) {
+                const user = JSON.parse(saved);
+                currentUser = user;
+                currentRole = user.role;
+                showLoggedInState();
+                updateNavigation();
+                updateDashboard();
+            } else {
+                showLoggedOutState();
+            }
+        }
+
+        function showLoggedInState() {
+            document.getElementById('auth-btn').classList.add('hidden');
+            document.getElementById('register-btn').classList.add('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('user-name').innerText = currentUser.name || currentUser.email.split('@')[0];
+        }
+
+        function showLoggedOutState() {
+            document.getElementById('auth-btn').classList.remove('hidden');
+            document.getElementById('register-btn').classList.remove('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+        }
+
+        function updateNavigation() {
+            const navMenu = document.getElementById('nav-menu');
+            if(currentRole === 'expert') {
+                navMenu.innerHTML = `
+                    <a class="nav-link" onclick="navigate('home')">Главная</a>
+                    <a class="nav-link" onclick="navigate('homework')">Задания</a>
+                    <a class="nav-link" onclick="navigate('chat')">Чат</a>
+                `;
+            } else if(currentRole === 'client') {
+                navMenu.innerHTML = `
+                    <a class="nav-link" onclick="navigate('home')">Главная</a>
+                    <a class="nav-link" onclick="navigate('matching')">Подбор</a>
+                    <a class="nav-link" onclick="navigate('practices')">Практики</a>
+                    <a class="nav-link" onclick="navigate('experts')">Специалисты</a>
+                    <a class="nav-link" onclick="navigate('premium')">Премиум</a>
+                    <a class="nav-link" onclick="navigate('blog')">Блог</a>
+                    <a class="nav-link" onclick="navigate('homework')">Задания</a>
+                    <a class="nav-link" onclick="navigate('chat')">Чат</a>
+                    <a class="nav-link" onclick="navigate('privacy')">Защита</a>
+                `;
+            }
+        }
+
+        function updateDashboard() {
+            const progressDashboard = document.getElementById('progress-dashboard');
+            if(currentUser) {
+                progressDashboard.style.display = 'block';
+                
+                const savedStats = localStorage.getItem('echo_user_stats');
+                if(savedStats) {
+                    userStats = JSON.parse(savedStats);
+                    document.getElementById('stat-sessions').innerText = userStats.sessions || 0;
+                    document.getElementById('stat-practices').innerText = userStats.practices || 0;
+                    document.getElementById('stat-days').innerText = userStats.days || 0;
+                    document.getElementById('stat-badges').innerText = userStats.badges || 0;
+                }
+            }
+        }
+
+        function navigate(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.add('show');
+            document.getElementById('auth-modal').style.display = 'flex';
+        }
+
+        function openRegisterModal() {
+            document.getElementById('register-modal').classList.add('show');
+            document.getElementById('register-modal').style.display = 'flex';
+        }
+
+        function openFreeConsultationModal() {
+            document.getElementById('free-consultation-modal').classList.add('show');
+            document.getElementById('free-consultation-modal').style.display = 'flex';
+        }
+
+        function openMoodTracker() {
+            document.querySelector('.mood-tracker').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openFavorites() {
+            showToast('Избранное в разработке!', 'info');
+        }
+
+        function openChatSupport() {
+            if(!currentUser) { showToast('Войдите для доступа к чату', 'error'); openAuthModal(); return; }
+            navigate('chat');
+        }
+
+        function openCrisisHelp() {
+            openEmergencyModal();
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) {
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        // AUTH FUNCTIONS
+        function switchModalAuthTab(type) {
+            document.querySelectorAll('#auth-modal .auth-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('modal-client-auth-form').classList.add('hidden');
+            document.getElementById('modal-expert-auth-form').classList.add('hidden');
+            document.getElementById('modal-' + type + '-auth-form').classList.remove('hidden');
+        }
+
+        function switchRegisterTab(type) {
+            document.querySelectorAll('#register-modal .auth-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('register-client-form').classList.add('hidden');
+            document.getElementById('register-expert-form').classList.add('hidden');
+            document.getElementById('register-' + type + '-form').classList.remove('hidden');
+        }
+
+        function modalClientAuth() {
+            const email = document.getElementById('modal-client-email').value.trim();
+            const password = document.getElementById('modal-client-password').value;
+            
+            const user = DB.users.find(u => u.email === email && u.password === password && u.role === 'client');
+            if(!user) { showToast('Неверные данные', 'error'); return; }
+            
+            loginUser({ name: user.name, email: user.email, id: user.id, role: 'client' });
+            const rememberMe = document.getElementById('remember-me').checked;
+            if(rememberMe) saveRememberMe({ name: user.name, email: user.email, id: user.id, role: 'client' });
+            closeModal('auth-modal');
+        }
+
+        function modalExpertAuth() {
+            const email = document.getElementById('modal-expert-email').value.trim();
+            const password = document.getElementById('modal-expert-password').value;
+            
+            const expert = DB.experts.find(e => e.email === email && e.password === password);
+            if(!expert) { showToast('Неверные данные', 'error'); return; }
+            
+            loginUser({ name: expert.firstname + ' ' + expert.lastname, email: expert.email, id: expert.id, role: 'expert' });
+            const rememberMe = document.getElementById('remember-me-expert').checked;
+            if(rememberMe) saveRememberMe({ name: expert.firstname + ' ' + expert.lastname, email: expert.email, id: expert.id, role: 'expert' });
+            closeModal('auth-modal');
+            showToast('Вход выполнен! Добро пожаловать!', 'success');
+        }
+
+        function loginUser(user) {
+            currentUser = user;
+            currentRole = user.role;
+            localStorage.setItem('echo_current_user', JSON.stringify(user));
+            showToast('Вход выполнен!', 'success');
+            showLoggedInState();
+            updateNavigation();
+            updateDashboard();
+        }
+
+        function registerClient() {
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value;
+            
+            if(!name || !email || !password) { showToast('Заполните все поля', 'error'); return; }
+            if(password.length < 6) { showToast('Пароль должен содержать минимум 6 символов', 'error'); return; }
+            if(DB.users.find(u => u.email === email)) { showToast('Email уже зарегистрирован', 'error'); return; }
+            
+            const user = { id: Date.now().toString(), name: name, email: email, password: password, role: 'client' };
+            DB.users.push(user);
+            saveDB();
+            
+            showToast('Регистрация успешна! Теперь войдите.', 'success');
+            closeModal('register-modal');
+            openAuthModal();
+        }
+
+        function submitExpertApplication() {
+            showToast('Заявка отправлена! Ожидайте модерации 1-3 дня.', 'success');
+            closeModal('register-modal');
+        }
+
+        function submitFreeConsultation() {
+            const name = document.getElementById('consult-name').value;
+            const email = document.getElementById('consult-email').value;
+            const phone = document.getElementById('consult-phone').value;
+            
+            if(!name || !email || !phone) { showToast('Заполните обязательные поля', 'error'); return; }
+            
+            showToast('Заявка отправлена! Мы свяжемся с вами в течение 24 часов.', 'success');
+            closeModal('free-consultation-modal');
+        }
+
+        function logout() {
+            currentUser = null;
+            currentRole = null;
+            localStorage.removeItem('echo_current_user');
+            clearRememberMe();
+            showLoggedOutState();
+            navigate('home');
+            showToast('Выход выполнен', 'info');
+        }
+
+        // PAYMENT FUNCTIONS
+        function buyPackage(sessions, price) {
+            if(!currentUser) { showToast('Войдите для покупки', 'error'); openAuthModal(); return; }
+            showToast(`Пакет ${sessions} сессий за ${price}₽ добавлен в корзину!`, 'success');
+        }
+
+        function buyGiftCertificate() {
+            if(!currentUser) { showToast('Войдите для покупки', 'error'); openAuthModal(); return; }
+            showToast('Подарочный сертификат доступен для оформления!', 'success');
+        }
+
+        function buyPremium() {
+            if(!currentUser) { showToast('Войдите для покупки', 'error'); openAuthModal(); return; }
+            showToast('Премиум подписка оформлена!', 'success');
+        }
+
+        function buyPremiumPlus() {
+            if(!currentUser) { showToast('Войдите для покупки', 'error'); openAuthModal(); return; }
+            showToast('Премиум Плюс подписка оформлена!', 'success');
+        }
+
+        // PRACTICE FUNCTIONS
+        function openPractice(practiceType) {
+            showToast('Практика открывается...', 'info');
+        }
+
+        function startPractice(practiceType) {
+            if(!currentUser) { showToast('Войдите для доступа к практикам', 'error'); openAuthModal(); return; }
+            
+            currentPractice = practices[practiceType];
+            practiceStep = 0;
+            practiceRunning = false;
+            
+            if(!currentPractice) { showToast('Практика не найдена', 'error'); return; }
+            
+            document.getElementById('practice-modal-title').innerHTML = `<i class="fas fa-spa"></i> ${currentPractice.title}`;
+            document.getElementById('practice-modal-desc').innerText = currentPractice.desc;
+            document.getElementById('practice-timer').innerText = `${currentPractice.duration}:00`;
+            
+            renderPracticeSteps();
+            
+            document.getElementById('practice-modal').classList.add('show');
+            document.getElementById('practice-modal').style.display = 'flex';
+        }
+
+        function renderPracticeSteps() {
+            const stepsContainer = document.getElementById('practice-steps');
+            stepsContainer.innerHTML = currentPractice.steps.map((step, index) => `
+                <div class="practice-step ${index === practiceStep ? 'active' : ''}" id="step-${index}">
+                    <span class="practice-step-number">${index + 1}</span>
+                    <span>${step}</span>
+                </div>
+            `).join('');
+        }
+
+        function togglePractice() {
+            const btn = document.getElementById('practice-start-btn');
+            if(practiceRunning) {
+                clearInterval(practiceTimer);
+                practiceRunning = false;
+                btn.innerHTML = '<i class="fas fa-play"></i> Продолжить';
+            } else {
+                practiceRunning = true;
+                btn.innerHTML = '<i class="fas fa-pause"></i> Пауза';
+                startTimer();
+                userStats.practices = (userStats.practices || 0) + 1;
+                saveDB();
+                updateDashboard();
+            }
+        }
+
+        function startTimer() {
+            let timeLeft = currentPractice.duration * 60;
+            practiceTimer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('practice-timer').innerText = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if(timeLeft <= 0) {
+                    clearInterval(practiceTimer);
+                    practiceRunning = false;
+                    showToast('Практика завершена! Отличная работа!', 'success');
+                    document.getElementById('practice-start-btn').innerHTML = '<i class="fas fa-check"></i> Завершено';
+                }
+            }, 1000);
+        }
+
+        function nextStep() {
+            if(practiceStep < currentPractice.steps.length - 1) {
+                practiceStep++;
+                renderPracticeSteps();
+            }
+        }
+
+        function previousStep() {
+            if(practiceStep > 0) {
+                practiceStep--;
+                renderPracticeSteps();
+            }
+        }
+
+        function openEmergencyModal() {
+            document.getElementById('emergency-modal').classList.add('show');
+            document.getElementById('emergency-modal').style.display = 'flex';
+        }
+
+        // EXPERTS & BLOG
+        function loadExperts() {
+            const expertsList = document.getElementById('experts-list');
+            if(!expertsList) return;
+            
+            expertsList.innerHTML = DB.experts.map(expert => {
+                const initials = expert.firstname.charAt(0) + expert.lastname.charAt(0);
+                
+                return `
+                <div class="expert-card">
+                    <div class="expert-photo-placeholder">${initials}</div>
+                    
+                    <div class="expert-header">
+                        <div class="expert-name">${expert.firstname} ${expert.lastname}</div>
+                        <div class="expert-spec">${expert.specialty}</div>
+                        <div class="expert-rating">
+                            ${getStars(expert.rating)}
+                            <span style="margin-left: 8px; color: var(--text-secondary);">${expert.rating} (${expert.reviewsCount} отзывов)</span>
+                        </div>
+                        ${expert.verified ? '<span class="expert-badge"><i class="fas fa-check-circle"></i> Проверенный</span>' : ''}
+                    </div>
+                    
+                    <div style="margin: 15px 0;">
+                        <strong style="color: var(--text-primary); font-size: 0.95rem;">
+                            <i class="fas fa-briefcase-medical"></i> С чем работает:
+                        </strong>
+                        <div class="expert-works-with">
+                            ${expert.worksWith.slice(0, 5).map(tag => `<span class="expert-work-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="expert-info-row">
+                        <div class="expert-experience">
+                            <div style="margin-bottom: 5px;"><i class="fas fa-clock"></i> Опыт: ${expert.experience}+ лет</div>
+                        </div>
+                        <div class="expert-price">
+                            <div class="expert-price-value">${expert.sessionPrice}₽</div>
+                            <div class="expert-price-label">за сессию</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-success btn-block" style="margin-top: 20px;" onclick="openBooking('${expert.id}', '${expert.firstname} ${expert.lastname}', ${expert.sessionPrice})">
+                        <i class="fas fa-calendar-plus"></i> Записаться
+                    </button>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function getStars(rating) {
+            const fullStars = Math.floor(rating);
+            let stars = '';
+            for(let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+            return stars;
+        }
+
+        function openBooking(expertId, expertName, price) {
+            if(!currentUser) { showToast('Войдите для записи', 'error'); openAuthModal(); return; }
+            showToast('Запись к ' + expertName + ' оформлена!', 'success');
+            userStats.sessions = (userStats.sessions || 0) + 1;
+            saveDB();
+            updateDashboard();
+        }
+
+        function loadBlogPosts() {
+            const blogList = document.getElementById('blog-list');
+            if(!blogList) return;
+            
+            const posts = [
+                { id: '1', title: 'Как справиться с тревожностью: 7 работающих техник', category: 'Тревога', excerpt: 'Практические методы, которые помогут снизить уровень тревоги и вернуть спокойствие...', author: 'Анна Смирнова', date: '10 марта 2024', readTime: '8 мин' },
+                { id: '2', title: 'Почему вы не высыпаетесь и как это исправить', category: 'Сон', excerpt: 'Научный подход к качественному сну: ритуалы, техники и распространённые ошибки...', author: 'Игорь Петров', date: '8 марта 2024', readTime: '10 мин' },
+                { id: '3', title: 'Профилактика выгорания: признаки и решения', category: 'Работа', excerpt: 'Как распознать эмоциональное выгорание на ранней стадии и что делать...', author: 'Алла Марданашвили', date: '5 марта 2024', readTime: '12 мин' }
+            ];
+            
+            blogList.innerHTML = posts.map(post => `
+                <div class="blog-card">
+                    <div class="blog-image"><i class="fas fa-newspaper"></i></div>
+                    <div class="blog-content">
+                        <span class="blog-category">${post.category}</span>
+                        <h3 class="blog-title">${post.title}</h3>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> ${post.date}</span>
+                            <span><i class="fas fa-clock"></i> ${post.readTime}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showToast(message, type) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        window.onclick = function(event) {
+            if(event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        };
+    </script>
+</body>
+</html>
